@@ -1,3 +1,0 @@
-bootstrapping
-bootstrap
-  self subclassResponsibility

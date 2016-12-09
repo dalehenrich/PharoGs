@@ -1,7 +1,7 @@
 compilation
-compileForClassNamed: className method: sourceString category: categoryString
+compileForMetaclassNamed: className method: sourceString category: categoryString
   ^ self
-    compileForClassNamed: className
+    compileForMetaclassNamed: className
     method: sourceString
     category: categoryString
     symbolList: self symbolList
