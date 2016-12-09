@@ -1,0 +1,14 @@
+{
+	"category" : "BaselineOfPharoGs",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "dkh 12/09/2016 10:25",
+	"instvars" : [
+		 ],
+	"name" : "BaselineOfPharoGs",
+	"pools" : [
+		 ],
+	"super" : "BaselineOf",
+	"type" : "normal" }
