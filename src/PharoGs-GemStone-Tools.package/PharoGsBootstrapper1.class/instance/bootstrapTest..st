@@ -6,4 +6,4 @@ bootstrapTest: aBool
     bootstrapInspectorMethods.
   aBool
     ifTrue: [ ^ self ].
-  ^ self execute: 'ProtoObject new'
+  ^ self execute: 'Array new: 10'
