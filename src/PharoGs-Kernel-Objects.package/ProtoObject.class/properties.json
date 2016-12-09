@@ -1,0 +1,14 @@
+{
+	"category" : "PharoGs-Kernel-Objects",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "ProtoObject",
+	"pools" : [
+		 ],
+	"super" : "nil",
+	"type" : "normal" }
