@@ -1,3 +1,4 @@
+*pharogs-kernel-objects
 memory scanning
 nextInstance
 	"Primitive. Answer the next instance after the receiver in the 

@@ -1,4 +1,4 @@
-reflective operations
+*pharogs-kernel-objects
 cannotInterpret: aMessage 
 	 "Handle the fact that there was an attempt to send the given message to the receiver but a null methodDictionary was encountered while looking up the message selector.  Hopefully this is the result of encountering a stub for a swapped out class which induces this exception on purpose."
 

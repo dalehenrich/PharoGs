@@ -1,4 +1,4 @@
-reflective operations
+*pharogs-kernel-objects
 doesNotUnderstand: aMessage
 doesNotUnderstand: aMessageDescriptor
   "The method is for compatiblity with Gs64 v2.x, and assumes you are using 
