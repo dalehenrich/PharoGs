@@ -1,9 +1,0 @@
-bootstrapping
-bootstrapClassStructure
-  self
-    bootstrapBasicClassStructure;
-    bootstrapSmallIntegerClassStructure;
-    bootstrapExceptionClassStructure;
-    bootstrapBehaviorClassStructure;
-    bootstrapArrayClassStructure;
-    yourself
