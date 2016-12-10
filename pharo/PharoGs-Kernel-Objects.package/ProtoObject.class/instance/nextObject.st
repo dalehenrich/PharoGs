@@ -4,5 +4,6 @@ nextObject
 	enumeration of all objects. Return 0 when all objects have been 
 	enumerated."
 
-	<primitive: 139>
+        self flag: #PharoGs.
+        self error: 'not ported'.
 	self primitiveFailed.

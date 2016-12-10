@@ -4,5 +4,6 @@ nextInstance
 	enumeration of all instances of this class. Fails if all instances have been 
 	enumerated. Essential. See Object documentation whatIsAPrimitive."
 
-	<primitive: 78>
+        self flag: #PharoGs.
+        self error: 'not ported'.
 	^nil

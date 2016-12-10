@@ -1,7 +1,7 @@
 class membership
 class
-	"Primitive. Answer the object which is the receiver's class. Essential. See 
-	Object documentation whatIsAPrimitive."
+class
+  "Returns the object that is the receiver's class."
 
-	<primitive: 111>
-	self primitiveFailed
+  <primitive: 610>
+  ^ self _primitiveFailed: #'class'

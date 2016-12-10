@@ -1,4 +1,5 @@
 {
 	"noMethodMetaData" : true,
 	"separateMethodMetaAndSource" : false,
-	"useCypressPropertiesFile" : true }
+	"useCypressPropertiesFile" : true,
+        "Metadata" : "false" }
