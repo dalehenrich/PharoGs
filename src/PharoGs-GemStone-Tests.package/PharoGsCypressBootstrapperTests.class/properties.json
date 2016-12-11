@@ -1,0 +1,14 @@
+{
+	"category" : "PharoGs-GemStone-Tests",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "PharoGsCypressBootstrapperTests",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

@@ -1,0 +1,15 @@
+{
+	"category" : "PharoGs-GemStone-Tools",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"defaultSymbolList",
+		"defaultEnvironmentId" ],
+	"name" : "PharoGsCypressLoader",
+	"pools" : [
+		 ],
+	"super" : "CypressLoader",
+	"type" : "normal" }
