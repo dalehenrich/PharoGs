@@ -1,6 +1,5 @@
 class membership
 class
-class
   "Returns the object that is the receiver's class."
 
   <primitive: 610>
