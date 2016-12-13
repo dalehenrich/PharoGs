@@ -2,7 +2,7 @@ bootstrapping
 bootstrapGemStoneProtoObjectMethods
   "These methods are needed in envionment 0 for the time being"
 
-  #(#'class' #'error:' #'doesNotUnderstand:' #'isBehavior' #'isNil' #'_errorExpectedClass:' #'_validateClass:')
+  #(#'error:' #'doesNotUnderstand:' #'isBehavior' #'isNil' #'_errorExpectedClass:' #'_validateClass:')
     do: [ :selector | | sourceString |
       sourceString := (ProtoObject compiledMethodAt: selector) sourceString.
       self
@@ -10,12 +10,11 @@ bootstrapGemStoneProtoObjectMethods
         method: sourceString
         category: 'gemstone system support'
         symbolList: GsSession currentSession symbolList
-        environmentId: 0 ].
-  #(#'_classOf:') do: [ :selector | | sourceString |
-      sourceString := (Object class compiledMethodAt: selector) sourceString.
-      self
-        compileForMetaclassNamed: 'Object'
-        method: sourceString
-        category: 'gemstone system support'
-        symbolList: GsSession currentSession symbolList
-        environmentId: 0 ]
+        environmentId: self methodEnvironment ].
+  self
+    compileForClassNamed: 'ProtoObject'
+    method: 'class ^Object @env0: _classOf: self'
+    category: 'gemstone system support'
+    symbolList: GsSession currentSession symbolList
+    environmentId: self methodEnvironment.
+  self halt
