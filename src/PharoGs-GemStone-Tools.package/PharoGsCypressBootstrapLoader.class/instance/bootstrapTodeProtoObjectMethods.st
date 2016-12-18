@@ -11,13 +11,4 @@ bootstrapTodeProtoObjectMethods
         method: sourceString
         category: 'tode inspector support'
         symbolList: GsSession currentSession symbolList
-        environmentId: self methodEnvironment ].
-  self halt.
-  self
-    compileForMetaclassNamed: 'ProtoOject'
-    method:
-      'new 
-^self @env0: new'
-    category: 'instance creation'
-    symbolList: GsSession currentSession symbolList
-    environmentId: self methodEnvironment
+        environmentId: 0 ]
