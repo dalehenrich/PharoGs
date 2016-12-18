@@ -11,7 +11,7 @@ bootstrapSmallIntegerClassStructure
   self class pharoSymbolList: self symbolList.
   System commit.
   session := TDGsExternalSession
-    sessionForStone: 'pharo_340_e'
+    sessionForStone: 'pharo_340_d'
     userName: 'SystemUser'
     password: 'swordfish'.
   session topez: (TDTopezServer for: 1).

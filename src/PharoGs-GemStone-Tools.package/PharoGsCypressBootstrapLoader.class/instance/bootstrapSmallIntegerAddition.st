@@ -7,4 +7,5 @@ bootstrapSmallIntegerAddition
     compileForClassNamed: 'Integer'
       method: 'pharoObject ^true'
       category: 'PharoGS';
-    yourself
+    yourself.
+  System commit

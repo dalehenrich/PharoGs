@@ -17,4 +17,4 @@ createClass: classCreationArg named: className superclassName: superclassName in
     tab;
     nextPutAll: 'options: #()';
     yourself.
-  ^ self execute: strm contents
+  ^ self executeForClassCreation: strm contents
