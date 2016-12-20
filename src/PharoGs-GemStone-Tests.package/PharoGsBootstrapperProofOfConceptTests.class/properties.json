@@ -4,10 +4,10 @@
 		 ],
 	"classvars" : [
 		 ],
-	"commentStamp" : "",
+	"commentStamp" : "dkh 12/20/2016 11:14",
 	"instvars" : [
 		 ],
-	"name" : "PharoGsCypressBootstrapperTests",
+	"name" : "PharoGsBootstrapperProofOfConceptTests",
 	"pools" : [
 		 ],
 	"super" : "TestCase",
