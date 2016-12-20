@@ -1,6 +1,6 @@
 tests
 testSmallIntegerAddition
-  | boot result |
+  | boot |
   boot := self bootstrapper.
   self loadProtoObjectPackage: boot.
   boot

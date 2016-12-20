@@ -1,0 +1,14 @@
+{
+	"category" : "PharoGs-GemStone-Tests",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "dkh 12/20/2016 12:15",
+	"instvars" : [
+		 ],
+	"name" : "PharoGsProtoObjectBootstrapTestCase",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }
