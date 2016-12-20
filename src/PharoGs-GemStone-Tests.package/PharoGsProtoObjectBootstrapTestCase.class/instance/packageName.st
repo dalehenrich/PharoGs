@@ -1,3 +1,3 @@
 private
 packageName
-  ^ 'PharoGs-ProtoObject-ProofOfConcept'
+  ^ 'PharoGs-Basic-ProtoObject'
