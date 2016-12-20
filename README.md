@@ -1,1 +1,3 @@
 Experimental project to bootstrap Pharo source into a GemStone db ... 
+
+Pharo source as of Pharo 6.0 #60332
