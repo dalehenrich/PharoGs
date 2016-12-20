@@ -1,5 +1,4 @@
 comparing
-== anObject 
 == anObject
   "(Optimized selector.)  Returns true if the receiver and the argument are the
  same object.

@@ -1,9 +1,9 @@
 comparing
 ~~ anObject
-	"Answer whether the receiver and the argument are different objects
-	(do not have the same object pointer)."
+  "(Optimized selector.)  Returns true if the receiver and the argument are not
+ the same object.
 
-	"This seemingly redundant implementation is for performance (and possibly other) reasons. See http://forum.world.st/About-and-td3898409.html for more details"
-	self == anObject
-		ifTrue: [^ false]
-		ifFalse: [^ true]
+ This selector is optimized by the compiler and may not be reimplemented
+ in any subclass. This implementation is so that perform will work."
+
+  ^ self ~~ anObject

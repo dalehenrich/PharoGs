@@ -1,10 +1,9 @@
 comparing
 identityHash
-	"Answer a SmallInteger whose value is related to the receiver's identity.
-	 This method must not be overridden, except by SmallInteger.  As of
-	 2014, the 32-bit Spur VM has 22 bits of hash and 31-bit SmallIntegers
-	 (30 bits + 1 sign bit).  Shifting by 8 will not create large integers.
-	
-	 Do not override."
+  "This method returns some Integer related to the identity of the receiver.  If
+ two objects compare identically (==) to each other, the results of sending
+identityHash to each of those objects will be equal."
 
-	^self basicIdentityHash bitShift: 8
+  <primitive: 609>
+  self _primitiveFailed: #'identityHash'.
+  self _uncontinuableError

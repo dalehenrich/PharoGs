@@ -1,11 +1,11 @@
 reflective operations
 basicIdentityHash
-	"Answer a SmallInteger whose value is related to the receiver's identity.
-	This method must not be overridden, except by SmallInteger.
-	Primitive. Fails if the receiver is a SmallInteger. Essential.
-	See Object documentation whatIsAPrimitive.
+  "This method returns some Integer related to the identity of the receiver.  If
+ two objects compare identically (==) to each other, the results of sending
+ basicIdentityHash to each of those objects is equal."
 
-	Do not override. Use #identityHash unless you really know what you're doing.'"
+  "Faster than identityHash.  Used in GsMethodDictionary ."
 
-	<primitive: 75>
-	self primitiveFailed
+  <primitive: 321>
+  self _primitiveFailed: #'basicIdentityHash'.
+  self _uncontinuableError
