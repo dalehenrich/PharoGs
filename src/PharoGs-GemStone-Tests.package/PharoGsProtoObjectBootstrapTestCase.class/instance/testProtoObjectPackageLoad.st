@@ -2,4 +2,7 @@ tests
 testProtoObjectPackageLoad
   "just load package without errors"
 
-  self loadProtoObjectPackage: self bootstrapper
+  | boot |
+  boot := self bootstrapper.
+  self loadProtoObjectPackage: boot.
+  self halt
