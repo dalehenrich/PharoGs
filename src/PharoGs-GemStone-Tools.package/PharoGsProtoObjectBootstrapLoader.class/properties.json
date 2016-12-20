@@ -1,0 +1,14 @@
+{
+	"category" : "PharoGs-GemStone-Tools",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		"PharoSymbolList" ],
+	"commentStamp" : "dkh 12/20/2016 12:38",
+	"instvars" : [
+		 ],
+	"name" : "PharoGsProtoObjectBootstrapLoader",
+	"pools" : [
+		 ],
+	"super" : "PharoGsAbstractBootstrapper",
+	"type" : "normal" }

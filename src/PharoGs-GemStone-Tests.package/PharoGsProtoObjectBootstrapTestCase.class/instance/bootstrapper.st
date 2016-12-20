@@ -1,3 +1,3 @@
 private
 bootstrapper
-  ^ PharoGsCypressBootstrapLoader new
+  ^ PharoGsProtoObjectBootstrapLoader new
