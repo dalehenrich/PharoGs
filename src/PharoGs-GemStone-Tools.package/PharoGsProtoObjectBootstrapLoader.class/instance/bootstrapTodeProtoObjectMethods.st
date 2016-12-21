@@ -2,7 +2,6 @@ bootstrapping
 bootstrapTodeProtoObjectMethods
   "these methods are needed in environment 0 to allow tODE to inspect PharoGs objects"
 
-  self bootstrapGemStoneProtoObjectMethods.
   #(#'asString' #'asTDCommandResult' #'asTDObjectNode:topez:aspect:' #'classForEditorNodeLookup' #'displayOnPolicy:' #'displayWith:' #'editUsing:' #'isCommitted' #'isInvariant' #'printExceptionSet' #'printOn:' #'printString' #'printStringTodeLimitedTo:' #'respondsTo:')
     do: [ :selector | | sourceString |
       sourceString := (ProtoObject compiledMethodAt: selector) sourceString.
