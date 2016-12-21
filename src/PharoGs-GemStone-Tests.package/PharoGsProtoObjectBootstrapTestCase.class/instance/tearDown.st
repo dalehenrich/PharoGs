@@ -1,5 +1,5 @@
 running
 tearDown
   super tearDown.
-  PharoGsCypressBootstrapLoader pharoSymbolList: nil.
+  self bootstrapperClass pharoSymbolList: nil.
   System commit

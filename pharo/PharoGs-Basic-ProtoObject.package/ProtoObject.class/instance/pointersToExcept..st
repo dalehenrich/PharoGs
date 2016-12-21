@@ -1,7 +1,7 @@
 pointing to
 pointersToExcept: objectsToExclude
 	"Find all objects in the system that hold a pointer to me, excluding those listed"
-	| c pointers object objectsToAlwaysExclude |
+	| c pointers objectsToAlwaysExclude |
 	Smalltalk garbageCollect.
 	pointers := OrderedCollection new.
 

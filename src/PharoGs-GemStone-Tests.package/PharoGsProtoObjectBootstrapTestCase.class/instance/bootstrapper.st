@@ -1,3 +1,3 @@
 private
 bootstrapper
-  ^ PharoGsProtoObjectBootstrapLoader new
+  ^ self bootstrapperClass new
