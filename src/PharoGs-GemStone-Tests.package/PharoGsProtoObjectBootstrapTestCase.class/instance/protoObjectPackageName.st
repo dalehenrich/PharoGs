@@ -1,3 +1,3 @@
 private
-packageName
+protoObjectPackageName
   ^ 'PharoGs-Basic-ProtoObject'

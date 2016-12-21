@@ -4,9 +4,9 @@
 		 ],
 	"classvars" : [
 		"PharoSymbolList" ],
-	"commentStamp" : "dkh 12/20/2016 12:38",
+	"commentStamp" : "",
 	"instvars" : [
-		 ],
+		"packageManager" ],
 	"name" : "PharoGsProtoObjectBootstrapLoader",
 	"pools" : [
 		 ],
