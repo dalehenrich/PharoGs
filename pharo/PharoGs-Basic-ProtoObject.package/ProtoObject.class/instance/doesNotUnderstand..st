@@ -1,7 +1,5 @@
 reflective operations
-doesNotUnderstand: aMessage
+doesNotUnderstand: aMessageDescriptor
+  "invoke MessageNotUnderstood indirectly in env 0"
 
-	^ MessageNotUnderstood new 
-		message: aMessage;
-		receiver: self;
-		signal
+  ^ self @env0: doesNotUnderstand: aMessageDescriptor
