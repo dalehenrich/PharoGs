@@ -5,7 +5,8 @@
 	"classvars" : [
 		 ],
 	"commentStamp" : "<historical>",
-	"instvars" : [
+	"instvars" : [ 
+		"thisContext"
 		 ],
 	"name" : "ProtoObject",
 	"pools" : [
