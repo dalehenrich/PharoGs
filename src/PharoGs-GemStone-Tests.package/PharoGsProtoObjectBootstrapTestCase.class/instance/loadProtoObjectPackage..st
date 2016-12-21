@@ -5,3 +5,5 @@ loadProtoObjectPackage: boot
       repositorySpec: self repositoryUrl;
     bootstrapFrom: {(self devProtoObjectPackageName)}
       repositorySpec: self repositoryUrl
+      symbolList: boot sessionSymbolList
+      envId: boot sessionMethodEnvironment

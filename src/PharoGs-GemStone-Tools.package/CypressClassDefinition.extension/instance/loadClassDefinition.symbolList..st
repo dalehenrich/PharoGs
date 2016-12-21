@@ -5,7 +5,7 @@ loadClassDefinition: aSymbolDictionaryName symbolList: aSymbolList
 
   | newClass oldClass |
   self defaultSymbolDictionaryName: aSymbolDictionaryName.
-  oldClass := aSymbolList resolveSymbol: self name.
+  oldClass := (aSymbolList resolveSymbol: self name) value.
   newClass := self
     createOrReviseClass: aSymbolDictionaryName
     symbolList: aSymbolList.

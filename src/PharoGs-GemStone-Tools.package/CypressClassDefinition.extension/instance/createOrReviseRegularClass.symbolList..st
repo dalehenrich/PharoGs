@@ -6,7 +6,7 @@ createOrReviseRegularClass: aSymbolDictionaryName symbolList: aSymbolList
 	 These are perhaps the same question."
 
   | superClass |
-  superClass := aSymbolList resolveSymbol: self superclassName.
+  superClass := (aSymbolList resolveSymbol: self superclassName) value.
   ^ (superClass
     subclass: self name
     instVarNames: (self instVarNames collect: [ :each | each asSymbol ])
