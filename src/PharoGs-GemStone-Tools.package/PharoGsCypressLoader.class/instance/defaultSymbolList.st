@@ -1,4 +1,3 @@
 accessing
 defaultSymbolList
-  ^ defaultSymbolList
-    ifNil: [ defaultSymbolList := System myUserProfile symbolList ]
+  ^ System myUserProfile symbolList

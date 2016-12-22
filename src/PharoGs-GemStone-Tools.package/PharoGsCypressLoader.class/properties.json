@@ -6,8 +6,9 @@
 		 ],
 	"commentStamp" : "",
 	"instvars" : [
-		"defaultSymbolList",
-		"defaultEnvironmentId" ],
+		"defaultEnvironmentId",
+		"lookupSymbolList",
+		"compilationSymbolList" ],
 	"name" : "PharoGsCypressLoader",
 	"pools" : [
 		 ],

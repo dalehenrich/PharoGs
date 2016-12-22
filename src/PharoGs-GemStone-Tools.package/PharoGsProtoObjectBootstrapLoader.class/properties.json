@@ -6,7 +6,7 @@
 		"PharoSymbolList" ],
 	"commentStamp" : "",
 	"instvars" : [
-		"packageManager" ],
+		 ],
 	"name" : "PharoGsProtoObjectBootstrapLoader",
 	"pools" : [
 		 ],

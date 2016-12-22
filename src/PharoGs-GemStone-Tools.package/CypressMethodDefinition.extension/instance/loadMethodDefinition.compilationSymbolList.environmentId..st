@@ -1,12 +1,12 @@
 *pharogs-gemstone-tools
-loadMethodDefinition: symbolList environmentId: environmentId
+loadMethodDefinition: lookupSymbolList compilationSymbolList: compilationSymbolList environmentId: environmentId
   | cls actualCls |
-  cls := (symbolList resolveSymbol: self className) value.
+  cls := (lookupSymbolList resolveSymbol: self className) value.
   actualCls := self classIsMeta
     ifTrue: [ cls class ]
     ifFalse: [ cls ].
   actualCls
     compileMethod: self source
-    dictionaries: symbolList
+    dictionaries: compilationSymbolList
     category: self category
     environmentId: environmentId

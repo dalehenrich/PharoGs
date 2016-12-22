@@ -1,4 +1,4 @@
 *pharogs-gemstone-tools
-loadMethodDefinition: symbolList environmentId: environmentId
+loadMethodDefinition: lookupSymbolList compilationSymbolList: compilationSymbolList environmentId: environmentId
   CypressError
     signal: 'inappropriate to send #loadMethodDefinition to a removal operation'

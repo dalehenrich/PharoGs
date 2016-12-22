@@ -1,7 +1,8 @@
 operations
 loadMethodDefinition: aPatchOperation
   [ [ aPatchOperation
-    loadMethodDefinition: self defaultSymbolList
+    loadMethodDefinition: self lookupSymbolList
+    compilationSymbolList: self compilationSymbolList
     environmentId: self defaultEnvironmentId ]
     on: CompileError
     do: [ :ex | self handleCompileError: ex from: aPatchOperation ] ]
