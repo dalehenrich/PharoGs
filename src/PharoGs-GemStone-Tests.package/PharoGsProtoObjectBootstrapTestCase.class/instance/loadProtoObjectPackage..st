@@ -4,7 +4,8 @@ loadProtoObjectPackage: boot
     bootstrapFrom: {(self protoObjectPackageName)}
     repositorySpec: self repositoryUrl.
   boot
-    bootstrapFrom: {(self devProtoObjectPackageName)}
+    bootstrapFrom: {(self devProtoObjectPackageName).
+      (self todeProtoObjectPackageName)}
     repositorySpec: self repositoryUrl
     compilationSymbolList: System myUserProfile symbolList
     lookupSymbolList: boot symbolList
