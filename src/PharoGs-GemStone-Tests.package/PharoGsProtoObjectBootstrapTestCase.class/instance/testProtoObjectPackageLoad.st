@@ -4,5 +4,4 @@ testProtoObjectPackageLoad
 
   | boot |
   boot := self bootstrapper.
-  self loadProtoObjectPackage: boot.
-  self halt
+  self loadProtoObjectPackage: boot
