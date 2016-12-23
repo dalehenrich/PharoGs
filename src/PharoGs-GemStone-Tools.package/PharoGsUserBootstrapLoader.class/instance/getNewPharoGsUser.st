@@ -6,9 +6,9 @@ getNewPharoGsUser
     ifTrue: [ AllUsers removeAndCleanup: newPharoGsUser.
       System commit ].
   newSymbolList := SymbolList new
-    addLast: self userGlobals;
-    addLast: self undefinedGlobals;
     addLast: self smalltalk;
+    addLast: self undefinedGlobals;
+    addLast: self userGlobals;
     yourself.
   newPharoGsUser := (AllUsers
     addNewUserWithId: 'PharoGsUser'
