@@ -4,4 +4,5 @@ testProtoObjectPackageLoad
 
   | boot |
   boot := self bootstrapper.
-  self loadProtoObjectPackage: boot
+  self loadProtoObjectPackage: boot.
+  System commit
