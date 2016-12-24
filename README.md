@@ -32,7 +32,9 @@ Screen shot of tODE environment opened on ProtoObject class, browsing method env
 
 <img style="border: 2px solid #000000;" src="https://raw.githubusercontent.com/dalehenrich/PharoGs/gs/docs/images/tode_2016-12-24.png" />
 
-ProtoObject is the only class in system (*CompileError occurred (error 1001), undefined symbol  Object* in shell window and no ProtoObject subclasses in hierarchy pane). Note inspector pane open on a ProtoObject instance.
+ProtoObject is the only class in system (*CompileError occurred (error 1001), undefined symbol  Object* in shell window and no ProtoObject subclasses in hierarchy pane). 
+
+Note the inspector pane open on a ProtoObject instance. GemStone does not (currently) have the notion of `thisContext`, so I've added `thisContext` as an instance variable to ProtoObject, so I won't have to immediately edit methods that reference `thisContext`. `thisContext` also acts as a signature for PharoGs classes as the ProtoObject class in GsDevKit does not have that instance variable. 
 
 `PharoGsUser` is a GemStone user with a symbol list that contains a symbol dictionary named *Smalltalk* and the single class ProtoObject. The Pharo methods are installed in method environment 2 (no tODE browsing capability, yet), but you can browse the [PharoGs-Basic-ProtoObject package][1] to see the method environment 2 class and instance methods. 
 
