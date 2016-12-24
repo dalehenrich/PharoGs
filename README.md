@@ -4,7 +4,7 @@ Experimental project to bootstrap [Pharo](http://pharo.org/web) source into a [G
 
 The package [PharoGs-Basic-ProtoObject package][1] contains the Pharo 6.0 source (currently as of Pharo 6.0 #60332) for the ProtoObject class. The package [PharoGs-Dev-ProtoObject package][2] contains the GemStone Smalltalk source code to implement the equivalent Pharo functionality ... a Pharo primitive implemented in GemStone Smalltalk. The package [PharoGs-Tode-ProtoObject package][3] contains the GemStone Smalltalk source code to support the use of [tODE](https://github.com/dalehenrich/tode) for inspecting PharoGs objects.
 
-Here's an example of a *Pharo Primitive implemented in GemStone smalltalk*. This is the implementation of [`become:`][4] in the PharoGs method environment 2 (:
+Here's an example of a *Pharo Primitive implemented in GemStone smalltalk*. This is the implementation of [`become:` method in method environment 2][4]:
 
 ```Smalltalk
 become: otherObject 
@@ -13,7 +13,7 @@ become: otherObject
 ^ otherObject @env0: become: self
 ```
 
-The selector `@env0:` allows one to call a method in an alternate method environment and in this case it is calling the [`become:` method in environment 0][5] 
+The selector `@env0:` allows one to call a method in an alternate method environment and in this case it is calling the [`become:` method in method environment 0][5].
 
 Screen shot of tODE environment opened on ProtoObject class, browsing method environmen 0 methods:
 
