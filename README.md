@@ -12,7 +12,7 @@ ProtoObject is the only class in system (*CompileError occurred (error 1001), un
 
 Here's a screen shot of a topaz session logged in as `PharoGsUser`:
 
-<img style="border: 2px solid #000000;" src="https://raw.githubusercontent.com/dalehenrich/PharoGs/master/docs/images/topaz_2016-12-24.pngg" />
+<img style="border: 2px solid #000000;" src="https://raw.githubusercontent.com/dalehenrich/PharoGs/master/docs/images/topaz_2016-12-24.png" />
 
 
 ... and here's a screen shot of a tODE debugger open on an MNU:
