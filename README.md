@@ -4,16 +4,29 @@ Experimental project to bootstrap [Pharo](http://pharo.org/web) source into a [G
 
 The package [PharoGs-Basic-ProtoObject package][1] contains the Pharo 6.0 source (currently as of Pharo 6.0 #60332) for the ProtoObject class. The package [PharoGs-Dev-ProtoObject package][2] contains the GemStone Smalltalk source code to implement the equivalent Pharo functionality ... a Pharo primitive implemented in GemStone Smalltalk. The package [PharoGs-Tode-ProtoObject package][3] contains the GemStone Smalltalk source code to support the use of [tODE](https://github.com/dalehenrich/tode) for inspecting PharoGs objects.
 
-Here's an example of a *Pharo Primitive implemented in GemStone smalltalk*. This is the implementation of [`become:` method in method environment 2][4]:
+Here's an example of a *Pharo Primitive implemented in GemStone smalltalk*. This is the implementation of [`doesNotUnderstand:` method in method environment 2][4]:
 
 ```Smalltalk
-become: otherObject 
-	"Swaps the identities of the receiver and the argument."
+doesNotUnderstand: aMessageDescriptor
+  "invoke MessageNotUnderstood indirectly in env 0"
 
-^ otherObject @env0: become: self
+^ self @env0: doesNotUnderstand: aMessageDescriptor
 ```
 
-The selector `@env0:` allows one to call a method in an alternate method environment and in this case it is calling the [`become:` method in method environment 0][5].
+The selector `@env0:` allows one to call a method in an alternate method environment and in this case it is calling the [`doesNotUnderstand:` method in method environment 0][5]:
+
+```Smalltalk
+doesNotUnderstand: aMessageDescriptor
+
+"The method is for compatiblity with Gs64 v2.x, and assumes you are using 
+   only method environment 0  for all of your Smalltalk code."
+
+| ex sel args |
+(ex := MessageNotUnderstood _basicNew)
+  receiver: self selector: (sel := aMessageDescriptor at: 1) 
+		args: (args := aMessageDescriptor at: 2) envId: 0 .
+^ex signal .
+```
 
 Screen shot of tODE environment opened on ProtoObject class, browsing method environmen 0 methods:
 
@@ -35,7 +48,7 @@ Here's a screen shot of a topaz session logged in as `PharoGsUser`:
 [1]: pharo/PharoGs-Basic-ProtoObject.package/ProtoObject.class
 [2]: pharo/PharoGs-Dev-ProtoObject.package/ProtoObject.extension
 [3]: pharo/PharoGs-Tode-ProtoObject.package/ProtoObject.extension
-[4]: pharo/PharoGs-Basic-ProtoObject.package/ProtoObject.class/instance/become..st
-[5]: pharo/PharoGs-Dev-ProtoObject.package/ProtoObject.extension/instance/become..st
+[4]: pharo/PharoGs-Basic-ProtoObject.package/ProtoObject.class/instance/doesNotUnderstand..st
+[5]: pharo/PharoGs-Dev-ProtoObject.package/ProtoObject.extension/instance/doesNotUnderstand..st
 
 
