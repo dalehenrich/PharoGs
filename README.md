@@ -33,8 +33,8 @@ Here's a screen shot of a topaz session logged in as `PharoGsUser`:
 <img style="border: 2px solid #000000;" src="https://raw.githubusercontent.com/dalehenrich/PharoGs/master/docs/images/tode_debugger_2016-12-24.png" />
 
 [1]: pharo/PharoGs-Basic-ProtoObject.package/ProtoObject.class
-[2]: pharo/PharoGs-Dev-ProtoObject.package/ProtoObject.class
-[3]: pharo/PharoGs-Tode-ProtoObject.package/ProtoObject.class
+[2]: pharo/PharoGs-Dev-ProtoObject.package/ProtoObject.extension
+[3]: pharo/PharoGs-Tode-ProtoObject.package/ProtoObject.extension
 [4]: pharo/PharoGs-Basic-ProtoObject.package/ProtoObject.class/instance/become..st
 [5]: pharo/PharoGs-Dev-ProtoObject.package/ProtoObject.extension/instance/become..st
 
