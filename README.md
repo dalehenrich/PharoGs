@@ -30,7 +30,7 @@ doesNotUnderstand: aMessageDescriptor
 
 Screen shot of tODE environment opened on ProtoObject class, browsing method environmen 0 methods:
 
-<img style="border: 2px solid #000000;" src="https://raw.githubusercontent.com/dalehenrich/PharoGs/master/docs/images/tode_2016-12-24.png" />
+<img style="border: 2px solid #000000;" src="https://raw.githubusercontent.com/dalehenrich/PharoGs/gs/docs/images/tode_2016-12-24.png" />
 
 ProtoObject is the only class in system (*CompileError occurred (error 1001), undefined symbol  Object* in shell window and no ProtoObject subclasses in hierarchy pane). Note inspector pane open on a ProtoObject instance.
 
@@ -38,12 +38,12 @@ ProtoObject is the only class in system (*CompileError occurred (error 1001), un
 
 Here's a screen shot of a topaz session logged in as `PharoGsUser`:
 
-<img style="border: 2px solid #000000;" src="https://raw.githubusercontent.com/dalehenrich/PharoGs/master/docs/images/topaz_2016-12-24.png" />
+<img style="border: 2px solid #000000;" src="https://raw.githubusercontent.com/dalehenrich/PharoGs/gs/docs/images/topaz_2016-12-24.png" />
 
 
 ... and here's a screen shot of a tODE debugger open on an MNU:
 
-<img style="border: 2px solid #000000;" src="https://raw.githubusercontent.com/dalehenrich/PharoGs/master/docs/images/tode_debugger_2016-12-24.png" />
+<img style="border: 2px solid #000000;" src="https://raw.githubusercontent.com/dalehenrich/PharoGs/gs/docs/images/tode_debugger_2016-12-24.png" />
 
 [1]: pharo/PharoGs-Basic-ProtoObject.package/ProtoObject.class
 [2]: pharo/PharoGs-Dev-ProtoObject.package/ProtoObject.extension
