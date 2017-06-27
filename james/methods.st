@@ -1,5 +1,5 @@
 "
-../MacOS/Pharo --headless Pharo-minimal.image methods.st
+/Applications/Pharo6.0.app/Contents/MacOS/Pharo --headless Pharo-minimal.image methods.st
 "
 [
 | cr lf tab block stream1 reservedSelectors list count compileErrors |
@@ -19,9 +19,6 @@ reservedSelectors := #(
 ).
 compileErrors := 
 #(
-	#(#Object #mustBeBooleanInMagic:)
-	#('MetaLink class' #defaultOptions)
-	#('OpalCompiler class' #defaultOptions)
 	#(#MCPatch #initializeWithBase:target:)
 	#(#UIManager #spawnNewProcess)
 	#(#MCVersion #withAllDependenciesDo:)

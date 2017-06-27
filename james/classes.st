@@ -1,12 +1,13 @@
 "
 ../MacOS/Pharo --headless Pharo-minimal.image classes.st
 "
+[
 | count fileStream list |
 fileStream := (FileStream forceNewFileNamed: 'classes.gs') text;
 	nextPutAll: 'output push classes.out only'; lf;
 	nextPutAll: 'run'; lf;
 	nextPutAll: '| symbolList |'; lf;
-	nextPutALl: 'symbolList := GsSession currentSession symbolList.'; lf;
+	nextPutAll: 'symbolList := GsSession currentSession symbolList.'; lf;
 	nextPutAll: 'symbolList add: (symbolList remove: Smalltalk) after: PharoPools.'; lf;
 	nextPut: $%; lf;
 	nextPutAll: 'errorCount'; lf.
@@ -64,5 +65,7 @@ fileStream
 	nextPutAll: 'errorCount'; lf;
 	close.
 Transcript show: 'classes count = ' , count printString; cr.
-
+] on: Error do: [:ex | 
+	Transcript show: ex description; cr.
+].
 SmalltalkImage current snapshot: false andQuit: true.
