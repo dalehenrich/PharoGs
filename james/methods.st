@@ -56,6 +56,7 @@ compileErrors :=
 stream1 := (FileStream forceNewFileNamed: 'methods.gs') text
 	nextPutAll: 'errorCount'; lf;
 	nextPutAll: 'output push methods.out only'; lf;
+	nextPutAll: 'set compile_env: 0'; lf;
 	nextPutAll: 'run'; lf;
 	nextPutAll: '| symbolList |'; lf;
 	nextPutAll: 'symbolList := GsSession currentSession symbolList.'; lf;
@@ -74,15 +75,26 @@ list do: [ :eachClass |
 			nextPutAll: 'output push output/';
 			nextPutAll: eachClass name;
 			nextPutAll: '.out only'; lf;
-			nextPutAll: 'errorCount'; lf.
-		stream2 
-			nextPutAll: 'removeAllMethods '; nextPutAll: eachClass name; lf;
-			nextPutAll: 'removeAllClassMethods '; nextPutAll: eachClass name; lf;
+			nextPutAll: 'errorCount'; lf;
+			nextPutAll: 'set compile_env: 0'; lf;
 			nextPutAll: 'run'; lf;
-			nextPutAll: eachClass name;
-			nextPutAll: ' comment: ';
+			nextPutAll: 'Smalltalk at: #'; nextPutAll: eachClass name; lf;
+			nextPut: $%; lf;
+			nextPutAll: 'set class **'; lf;
+			nextPutAll: 'set compile_env: 2'; lf;
+			nextPutAll: 'removeAllMethods'; lf;
+			nextPutAll: 'removeAllClassMethods'; lf;
+			nextPutAll: 'set compile_env: 0'; lf;
+			nextPutAll: 'removeAllMethods'; lf;
+			nextPutAll: 'removeAllClassMethods'; lf;
+			nextPutAll: 'run'; lf;
+			nextPutAll: '(Smalltalk at: #'; nextPutAll: eachClass name;
+			nextPutAll: ') comment: ';
 			print: (block value: eachClass comment); lf;
-			nextPut: $%; lf.
+			nextPutAll: '; yourself.'; lf;
+			nextPut: $%; lf;
+			nextPutAll: 'set compile_env: 2'; lf;
+			yourself.
 		(Array with: eachClass class with: eachClass) do: [ :eachBehavior |
 			| methodDict organization  |
 			methodDict := eachBehavior methodDict.
@@ -125,8 +137,7 @@ list do: [ :eachClass |
 					].
 				stream2 lf;
 					nextPutAll: 'category: '''; nextPutAll: category; nextPut: $'; lf;
-					nextPutAll: (eachBehavior isMeta ifTrue: ['classMethod: '] ifFalse: ['method: ']); 
-					nextPutAll: eachBehavior baseClass name; lf.
+					nextPutAll: (eachBehavior isMeta ifTrue: ['classMethod: '] ifFalse: ['method: ']); lf.
 				(source substrings: (Array with: lf)) do: [:eachLine | 
 					(eachLine notEmpty and: [eachLine first == $%]) ifTrue: [stream2 space].
 					stream2 nextPutAll: eachLine; lf.
