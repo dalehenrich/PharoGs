@@ -1,0 +1,776 @@
+output push output/CompileErrors.out only
+errorCount
+set compile_env: 0
+run
+Smalltalk at: #ChunkReadStream
+%
+set class **
+set compile_env: 2
+
+category: 'decorated'
+method: 
+parseLangTagFor: aString
+	<fixedCompileError>
+
+	| string peek runsRaw foundTag |
+	string := aString.
+	"Test for ]lang[ tag"
+	peek := self skipSeparators; peek.
+	peek = $] ifFalse: [ ^ string ].  "no tag"
+	foundTag := (decoratedStream upTo: $[).
+	foundTag = ']lang' ifTrue: [
+		runsRaw := self basicNextChunk.
+		string := self decodeString: aString andRuns: runsRaw
+	] ifFalse: [
+		"If we find a ] but not a lang tag, there is something really wrong and we are not ready to parse that"
+		^ string , self basicNextChunk
+	].
+	^ string
+%
+
+set compile_env: 0
+run
+Smalltalk at: #Class
+%
+set class **
+set compile_env: 2
+
+category: 'organization'
+method: 
+category
+	<fixedCompileError>
+
+	"Answer the system organization category for the receiver. First check whether the
+	category name stored in the ivar is still correct and only if this fails look it up
+	(latter is much more expensive)"
+	| result |
+	self basicCategory ifNotNil: [ :symbol |
+		((self environment organization listAtCategoryNamed: symbol) includes: self name)
+			ifTrue: [ ^symbol ] ].
+	result := (self environment organization categoryOfElement: self name)
+		ifNil: [ #Unclassified ]
+		ifNotNil: [ #yourself ].
+	self basicCategory: result.
+	
+	^ result
+%
+
+set compile_env: 0
+run
+Smalltalk at: #ConfigurationCommandLineHandler
+%
+set class **
+set compile_env: 2
+
+category: 'printing'
+method: 
+printConfigurations: configurations
+	<fixedCompileError>
+
+	self inform: (String streamContents:  [ :s|
+		s
+			nextPutAll: 'Found ';
+			print: configurations size;
+			nextPutAll: ' Configuration';
+			nextPutAll: (configurations size = 1 ifTrue: [':'] ifFalse: ['s:']) ]).
+	
+	configurations do: [ :name | 
+			self << name. 
+			self stdout lf ].
+%
+
+set compile_env: 0
+run
+Smalltalk at: #Context
+%
+set class **
+set compile_env: 2
+
+category: 'simulation'
+classMethod: 
+runSimulated: aBlock
+	<fixedCompileError>
+
+	"Simulate the execution of the argument, current. Answer the result it 
+	returns."
+	^ thisContext sender
+		runSimulated: aBlock
+		contextAtEachStep: [:ignored |]
+	"Context runSimulated: [Pen new defaultNib: 5; go: 100]"
+%
+
+set compile_env: 0
+run
+Smalltalk at: #Form
+%
+set class **
+set compile_env: 2
+
+category: 'other'
+method: 
+fillAlpha: alphaValue
+	<fixedCompileError>
+
+	"Fill a 32bit form with a constant alpha value"
+	| bb |
+	self depth = 32 ifFalse:[^self error: 'Only valid for 32 bit forms'].
+	bb := BitBlt toForm: self.
+	bb combinationRule: 7. "bitOr:with:"
+	bb fillColor: (Bitmap with: alphaValue << 24).
+	bb copyBits.
+%
+
+set compile_env: 0
+run
+Smalltalk at: #IRBytecodeDecompiler
+%
+set class **
+set compile_env: 2
+
+category: 'instruction decoding'
+method: 
+jump: dist
+	<fixedCompileError>
+
+	| index seq instr newSeq seqs |
+	index := instructionStream pc + dist .
+	dist >= 0 ifTrue: [
+		"jump forward"
+		^ irBuilder jumpAheadTo: index ].
+	"jump to the jump instuction itself"
+	dist >= -2 ifTrue: 
+		[	irBuilder jumpBackTarget: index.
+			irBuilder jumpBackTo: index.
+		^self].
+	"jump backward"
+	seqs := irBuilder ir allSequences.
+	seq := seqs findLast: [:s | s notEmpty and: [s first bytecodeIndex <= index]].
+	seq := seqs at: seq.
+	seq first bytecodeIndex = index
+		ifTrue: [ newSeq := seq ]
+		ifFalse: [
+			instr := seq detect: [:i | (seq after: i) bytecodeIndex = index].
+			newSeq := seq splitAfter: instr ].
+	irBuilder addJumpBackTarget: index to: newSeq.
+	"if we have split the currentSequence of the irBuilder, make sure to set it
+	to the newSeq"
+	irBuilder currentSequence = seq ifTrue: [irBuilder currentSequence: newSeq].
+	irBuilder jumpBackTo: index.
+%
+
+set compile_env: 0
+run
+Smalltalk at: #IRPrinterV2
+%
+set class **
+set compile_env: 2
+
+category: 'visiting'
+method: 
+visitPopIntoRemoteTemp: remoteTemp
+	<fixedCompileError>
+
+	stream nextPutAll: 'popIntoRemoteTemp: '.
+	remoteTemp name printOn: stream.
+	stream nextPutAll: ' inVector: '.
+	remoteTemp tempVectorName printOn: stream
+%
+
+set compile_env: 0
+run
+Smalltalk at: #IRPrinterV2
+%
+set class **
+set compile_env: 2
+
+category: 'visiting'
+method: 
+visitPushRemoteTemp: remoteTemp
+	<fixedCompileError>
+
+	stream nextPutAll: 'pushRemoteTemp: '.
+	remoteTemp name printOn: stream.
+	stream nextPutAll: ' inVector: '.
+	remoteTemp tempVectorName printOn: stream
+%
+
+set compile_env: 0
+run
+Smalltalk at: #IRPrinterV2
+%
+set class **
+set compile_env: 2
+
+category: 'visiting'
+method: 
+visitStoreRemoteTemp: remoteTemp
+	<fixedCompileError>
+
+	stream nextPutAll: 'storeRemoteTemp: '.
+	remoteTemp name printOn: stream.
+	stream nextPutAll: ' inVector: '.
+	remoteTemp tempVectorName printOn: stream.
+%
+
+set compile_env: 0
+run
+Smalltalk at: #IRReconstructor
+%
+set class **
+set compile_env: 2
+
+category: 'initialize'
+method: 
+createTempVectorNamed: name withVars: anArray
+	<fixedCompileError>
+
+	" Don't add the temp yet, we only know it's index at the end of the block or method "
+	"self addVectorTemps: anArray"
+	" Update the byte index to point before the pushing of the new vector "
+	sourceMapByteIndex := sourceMapByteIndex - 2.
+	self add: (IRInstruction createTempVectorNamed: name withVars: anArray)
+%
+
+set compile_env: 0
+run
+Smalltalk at: #Job
+%
+set class **
+set compile_env: 2
+
+category: 'examples'
+classMethod: 
+exampleCurrentValue
+	<fixedCompileError>
+
+	[ :job| 
+		job title: 'Simulating some progress for 1 Second'. 
+		1 second wait. "simulate some work"
+		job currentValue: 50.
+		1 second wait. "simulate some more work"
+		job currentValue: 100.
+		1 second wait. "simulate some more work"
+	] asJob run
+%
+
+set compile_env: 0
+run
+Smalltalk at: #MCMcdReader
+%
+set class **
+set compile_env: 2
+
+category: 'loading'
+method: 
+loadPatch
+	<fixedCompileError>
+
+	| old new |
+	(self zip memberNamed: 'patch.bin') ifNotNil:
+		[:m | [^ patch := (MCDataStream on: m contentStream) next ]
+			on: Error do: [:fallThrough | ]].
+	definitions := OrderedCollection new.
+	(self zip membersMatching: 'old/*')
+		do: [:m | self extractDefinitionsFrom: m].
+	old := definitions asArray.
+	definitions := OrderedCollection new.
+	(self zip membersMatching: 'new/*')
+		do: [:m | self extractDefinitionsFrom: m].
+	new := definitions asArray.
+	^ patch := self buildPatchFrom: old to: new.
+%
+
+set compile_env: 0
+run
+Smalltalk at: #MCMczReader
+%
+set class **
+set compile_env: 2
+
+category: 'loading'
+method: 
+loadDefinitions
+	<fixedCompileError>
+
+	definitions := OrderedCollection new.
+	(self zip memberNamed: 'snapshot.bin') ifNotNil:
+		[:m | [^ definitions := (MCDataStream on: m contentStream) next definitions]
+			on: Error do: [:fallThrough | ]].
+	"otherwise"
+	(self zip membersMatching: 'snapshot/*')
+		do: [:m | self extractDefinitionsFrom: m]
+%
+
+set compile_env: 0
+run
+Smalltalk at: #MCPatch
+%
+set class **
+set compile_env: 2
+
+category: 'initializing'
+method: 
+initializeWithBase: baseSnapshot target: targetSnapshot
+	<fixedCompileError>
+
+	| base target |	
+	operations := OrderedCollection new.
+	base := MCDefinitionIndex definitions: baseSnapshot definitions.
+	target := MCDefinitionIndex definitions: targetSnapshot definitions.
+	
+	target definitions 
+		do: [ :t |
+			base
+				definitionLike: t
+				ifPresent: [:b | (b isSameRevisionAs: t) ifFalse: [operations add: (MCModification of: b to: t)]]
+				ifAbsent:  [operations add: (MCAddition of: t)] ]
+		displayingProgress: 'Diffing...'.
+		
+	base definitions do: [:b |
+		target
+			definitionLike: b
+			ifPresent: [:t |]
+			ifAbsent: [operations add: (MCRemoval of: b)]]
+%
+
+set compile_env: 0
+run
+Smalltalk at: #MCVersion
+%
+set class **
+set compile_env: 2
+
+category: 'enumerating'
+method: 
+withAllDependenciesDo: aBlock
+	<fixedCompileError>
+
+	self allDependenciesDo: aBlock ifUnresolved: [:ignored |].
+	aBlock value: self
+%
+
+set compile_env: 0
+run
+Smalltalk at: #MultiByteFileStream
+%
+set class **
+set compile_env: 2
+
+category: 'fileIn/Out'
+method: 
+nextChunk
+	<fixedCompileError>
+
+	"Answer the contents of the receiver, up to the next terminator
+	character. Doubled terminators indicate an embedded terminator
+	character."
+	self skipSeparators.
+	^ self
+		parseLangTagFor: (self basicChunk
+				ifNil: [String
+						new: 1000
+						streamContents: [:stream | 
+							| character state |
+							[(character := self next) == nil
+								or: [character == $!
+										and: [state := converter saveStateOf: self.
+											self next ~~ $!]]]
+								whileFalse: [stream nextPut: character].
+							character
+								ifNotNil: [converter restoreStateOf: self with: state.]]])
+%
+
+set compile_env: 0
+run
+Smalltalk at: #MultiByteFileStream
+%
+set class **
+set compile_env: 2
+
+category: 'fileIn/Out'
+method: 
+nextPreamble
+	<fixedCompileError>
+
+	"Assuming that preamble part does not contain ]lang[ tag"
+	self skipSeparators.
+	^ self basicChunk
+				ifNil: [String
+						new: 1000
+						streamContents: [:stream | 
+							| character state |
+							[(character := self next) == nil
+								or: [character == $!
+										and: [state := converter saveStateOf: self.
+											self next ~~ $!]]]
+								whileFalse: [stream nextPut: character].
+							character
+								ifNotNil: [converter restoreStateOf: self with: state.]]]
+%
+
+set compile_env: 0
+run
+Smalltalk at: #PharoChangesCondenser
+%
+set class **
+set compile_env: 2
+
+category: 'initialization'
+method: 
+reset
+	<fixedCompileError>
+
+	remoteStringMap := IdentityDictionary new.
+	newChangesFile := self temporaryFile.
+	
+	"Keep a copy of the source streams for performance"
+	sourceStreams := Array
+			with: PharoFilesOpener default sourcesFileOrNil
+			with: PharoFilesOpener default changesFileOrNil
+%
+
+set compile_env: 0
+run
+Smalltalk at: #Protocol
+%
+set class **
+set compile_env: 2
+
+category: 'initialization'
+method: 
+initialize
+	<fixedCompileError>
+
+	super initialize.
+	methods := IdentitySet new.
+	name := self class defaultName.
+%
+
+set compile_env: 0
+run
+Smalltalk at: #RBProgramNode
+%
+set class **
+set compile_env: 2
+
+category: 'accessing'
+method: 
+comments: aCollection
+	<fixedCompileError>
+
+	(aCollection ifNil: [#()])
+		ifEmpty: [ self removeProperty: #comments ifAbsent: [] ] 
+		ifNotEmpty: [ self propertyAt: #comments put: aCollection ].
+%
+
+set compile_env: 0
+run
+Smalltalk at: #SourceFileArray
+%
+set class **
+set compile_env: 2
+
+category: 'private - copying'
+method: 
+readOnlyCopy
+	<fixedCompileError>
+
+	"Answer a read only copy of self. The caller is responsible of closing it."
+	^ self species new
+		sourcesFileStream: (self sourcesFileStream ifNotNil: [#readOnlyCopy]);
+		changesFileStream: (self changesFileStream ifNotNil: [#readOnlyCopy]);
+		yourself
+%
+
+set compile_env: 0
+run
+Smalltalk at: #StdioStream
+%
+set class **
+set compile_env: 2
+
+category: 'accessing'
+method: 
+next: n
+	<fixedCompileError>
+
+	"Return a string with the next n characters of the filestream in it."
+	| readBuffer read startingAt |
+	readBuffer := ByteArray new: n.
+	startingAt := 1.
+	peekBuffer ifNotNil: [ 
+		readBuffer at: 1 put: peekBuffer.
+		startingAt := startingAt + 1.
+		peekBuffer := nil ].
+	read := self primRead: handle into: readBuffer startingAt: startingAt count: n - startingAt + 1.
+	^read = (n - startingAt + 1)
+		ifTrue: [ readBuffer ]
+		ifFalse: [ readBuffer copyFrom: 1 to: read ]
+%
+
+set compile_env: 0
+run
+Smalltalk at: #String
+%
+set class **
+set compile_env: 2
+
+category: 'converting'
+method: 
+withNoLineLongerThan: aNumber
+	<fixedCompileError>
+
+	"Answer a string with the same content as receiver, but rewrapped so that no line has more characters than the given number"
+	(aNumber isNumber not or: [ aNumber < 1 ]) ifTrue: [self error: 'too narrow'].
+	^self class
+		new: self size * (aNumber + 1) // aNumber "provision for supplementary line breaks"
+		streamContents: [ :stream |
+			self lineIndicesDo: [ :start :endWithoutDelimiters :end |
+				| pastEnd lineStart |
+				pastEnd := endWithoutDelimiters + 1.
+				"eliminate spaces at beginning of line"
+				lineStart := (self indexOfAnyOf: CSNonSeparators startingAt: start ifAbsent: [pastEnd]) min: pastEnd.
+				[| lineStop lineEnd spacePosition |
+				lineEnd := lineStop  := lineStart + aNumber min: pastEnd.
+				spacePosition := lineStart.
+				[spacePosition < lineStop] whileTrue: [
+					spacePosition := self indexOfAnyOf: CSSeparators startingAt: spacePosition + 1 ifAbsent: [pastEnd].
+					spacePosition <= lineStop ifTrue: [lineEnd := spacePosition].
+				].
+				"split before space or before lineStop if no space"
+				stream nextPutAll: (self copyFrom: lineStart to: lineEnd - 1).
+				"eliminate spaces at beginning of next line"
+				lineStart := self indexOfAnyOf: CSNonSeparators startingAt: lineEnd ifAbsent: [pastEnd].
+				lineStart <= endWithoutDelimiters ]
+					whileTrue: [stream cr].
+				stream nextPutAll: (self copyFrom: pastEnd to: end) ] ]
+%
+
+set compile_env: 0
+run
+Smalltalk at: #TemporaryVariable
+%
+set class **
+set compile_env: 2
+
+category: 'comparing'
+method: 
+hash
+	<fixedCompileError>
+
+	^ (name hash
+		bitXor: method hash)
+		bitXor: (startpc ifNil: [0])
+%
+
+set compile_env: 0
+run
+Smalltalk at: #Text
+%
+set class **
+set compile_env: 2
+
+category: 'instance creation'
+classMethod: 
+fromString: aString 
+	<fixedCompileError>
+
+  "Answer an instance of me whose characters are those of the argument, aString."
+  | defaultFontStyle fontNumber |
+  defaultFontStyle := TextStyle default.
+  fontNumber := defaultFontStyle ifNil: [1] ifNotNil: [defaultFontStyle defaultFontIndex].
+  ^ self
+    string: aString
+    attributes:{ "No default attributes" }
+%
+
+set compile_env: 0
+run
+Smalltalk at: #Text
+%
+set class **
+set compile_env: 2
+
+category: 'initialization'
+classMethod: 
+initialize	"Text initialize"
+	<fixedCompileError>
+
+	"Initialize constants shared by classes associated with text display."
+	TextSharedInformation at: #CaretForm put:
+				(Form extent: 16@5
+					fromArray: #(
+						2r00110000000000000000000000000000 
+						2r00110000000000000000000000000000
+						2r01111000000000000000000000000000 
+						2r11111100000000000000000000000000 
+						2r11001100000000000000000000000000
+					)
+					offset: -3@0).
+%
+
+set compile_env: 0
+run
+Smalltalk at: #TextFontChange
+%
+set class **
+set compile_env: 2
+
+category: 'as yet unclassified'
+classMethod: 
+defaultFontChange
+	<fixedCompileError>
+
+  "Answer a TextFontChange that represents the default font"
+  | defaultFontStyle fontIndex |
+  defaultFontStyle := TextStyle default.
+  fontIndex := defaultFontStyle ifNil: [1] ifNotNil: [defaultFontStyle defaultFontIndex].
+  ^ self new fontNumber: fontIndex.
+%
+
+set compile_env: 0
+run
+Smalltalk at: #Trait
+%
+set class **
+set compile_env: 2
+
+category: 'organization'
+method: 
+category
+	<fixedCompileError>
+
+	"Answer the system organization category for the receiver. First check whether the
+	category name stored in the ivar is still correct and only if this fails look it up
+	(latter is much more expensive)"
+	| result |
+	self basicCategory ifNotNil: [ :symbol |
+		((self environment organization listAtCategoryNamed: symbol) includes: self name)
+			ifTrue: [ ^symbol ] ].
+	result := (self environment organization categoryOfElement: self name)
+		ifNil: [ #Unclassified ]
+		ifNotNil: [ #yourself ].
+	self basicCategory: result.
+	
+	^ result
+%
+
+set compile_env: 0
+run
+Smalltalk at: #TraitDescription
+%
+set class **
+set compile_env: 2
+
+category: '*CodeExport'
+method: 
+fileOutLocalMethodsInCategory: aSymbol on: aFileStream
+	<fixedCompileError>
+
+	"File out only the local (non-trait) methods for this category."
+	| selectors localSelectorsA |
+	aFileStream cr.
+	selectors := self selectorsToFileOutCategory: aSymbol.
+   localSelectorsA := selectors select:[:s | self isLocalSelector: s ].
+	"Overridden to preserve author stamps in sources file regardless"
+	localSelectorsA do: [:sel |
+		self printMethodChunk: sel on: aFileStream ].
+	^ self
+%
+
+set compile_env: 0
+run
+Smalltalk at: #UIManager
+%
+set class **
+set compile_env: 2
+
+category: 'ui process'
+method: 
+spawnNewProcess
+	<fixedCompileError>
+
+	"do nothing by default"
+%
+
+set compile_env: 0
+run
+Smalltalk at: #UTF16TextConverter
+%
+set class **
+set compile_env: 2
+
+category: 'conversion'
+method: 
+nextFromStream: aStream
+	<fixedCompileError>
+
+	| character1 character2 readBOM charValue |
+	aStream isBinary ifTrue: [^ aStream basicNext].
+	character1 := aStream basicNext ifNil: [^nil].
+	character2 := aStream basicNext ifNil: [^nil].
+	readBOM := false.
+	(character1 asciiValue = 16rFF and: [character2 asciiValue = 16rFE]) ifTrue: 
+		[self useLittleEndian: true.
+		readBOM := true].
+	(character1 asciiValue = 16rFE and: [character2 asciiValue = 16rFF]) ifTrue: 
+		[self useLittleEndian: false.
+		readBOM := true].
+	readBOM ifTrue: 
+		[self useByteOrderMark: true.
+		character1 := aStream basicNext ifNil: [^nil].
+		character2 := aStream basicNext ifNil: [^nil]].
+	charValue := self useLittleEndian 
+		ifTrue: [(character2 charCode bitShift: 8) + character1 charCode] 
+		ifFalse: [(character1 charCode bitShift: 8) + character2 charCode].
+	^ self charFromStream: aStream withFirst: charValue.
+%
+
+set compile_env: 0
+run
+Smalltalk at: #ZdcPluginSSLSession
+%
+set class **
+set compile_env: 2
+
+category: 'accessing'
+method: 
+serverName: serverName
+	<fixedCompileError>
+
+	"Set the Server Name Indication (SNI) to serverName, 
+	the fully qualified domain name of the host to connect to.
+	This should be set by a client before #connect is attempted."
+	
+	^ self primitiveSSL: handle setStringProperty: 2 toValue: (serverName ifNil: [''])
+%
+
+set compile_env: 0
+run
+Smalltalk at: #ZnImageExampleDelegate
+%
+set class **
+set compile_env: 2
+
+category: 'accessing'
+method: 
+html
+	<fixedCompileError>
+
+	^ ZnHtmlOutputStream streamContents: [ :html |
+		 html page: 'Image' do: [
+			html 
+				tag: #src attributes: #(src 'image?raw=true');
+				tag: #br;
+				tag: #form attributes: #(enctype 'multipart/form-data' action image method POST) do: [
+					html
+						tag: #h3 with: 'Change the image:';
+						tag: #input attributes: #(type file name file);
+						tag: #input attributes: #(type submit value Upload) ] ] ]
+%
+
+
+
+errorCount
+output pop
+errorCount
