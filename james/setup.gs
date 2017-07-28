@@ -37,3 +37,4 @@ run
 %
 commit
 input methods.gs
+input compileErrors.tpz

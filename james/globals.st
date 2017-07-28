@@ -1,8 +1,3 @@
-
-"
-../MacOS/Pharo --headless Pharo-minimal.image globals.st
-"
-
 | fileStream dict |
 fileStream := (FileStream forceNewFileNamed: 'globals.gs') text;
 	nextPutAll: 'output push globals.out only'; lf;
@@ -34,4 +29,5 @@ fileStream
 	nextPutAll: 'errorCount'; lf;
 	close.
 
+Transcript show: 'globals count = ' , (dict size + 8) printString; cr.
 SmalltalkImage current snapshot: false andQuit: true.

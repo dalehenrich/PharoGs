@@ -768,7 +768,366 @@ html
 						tag: #input attributes: #(type file name file);
 						tag: #input attributes: #(type submit value Upload) ] ] ]
 %
+errorCount
+set compile_env: 0
+run
+Smalltalk at: #Object
+%
+set class **
+set compile_env: 2
 
+category: '*OpalCompiler-Core'
+method: 
+mustBeBooleanInMagic: context
+	"Permits to redefine methods inlined by compiler.
+	Take the ast node corresponding to the mustBeBoolean error, compile it on the with Opal fly and executes it as a DoIt. Then resume the execution of the context."
+	<fixedCompileError>
+	| sendNode methodNode method |
+	"get the message send node that triggered mustBeBoolean"
+	sendNode := context sourceNode sourceNodeForPC: context pc - 1.
+	"Build node to perform send unoptimized"
+	methodNode := RBMethodNode 
+		selector: #ExecuteUnOptimizedIn: 
+		arguments: { RBVariableNode named:'ThisContext' } 
+		body: sendNode copy asSequenceNode.
+	"Rewrite temps to access the values in context"
+	methodNode rewriteTempsForContext: context.
+	"Rewrite non-local returns to return to the correct context from send"
+	RBParseTreeRewriter new 
+		replace: '^ ``@value' with: 'ThisContext home return: ``@value';
+		executeTree: methodNode.
+	"Add a return to the method body"
+	methodNode body transformLastToReturn.	
+	"Keep same compilation context as the sender node's"
+	methodNode compilationContext: sendNode methodNode compilationContext copy.
+	"Disable inlining so the message send will be unoptimized"
+	methodNode compilationContext compilerOptions: #(#- optionInlineIf optionInlineAndOr optionInlineWhile).
+	"Generate the method"	
+	method := methodNode generate.
+	"resume the context at the instruction following the send when returning from deoptimized code"
+	context pc: sendNode irInstruction nextBytecodeOffsetAfterJump.
+	"Execute the generated method"
+	^ context receiver withArgs: {context} executeMethod: method
+%
+errorCount
+set compile_env: 0
+run
+Smalltalk at: #InstructionStream
+%
+set class **
+set compile_env: 2
+
+category: '*OpalCompiler-Core'
+classMethod: 
+compiler
+	"The JIT compiler needs to trap all reads to instance variables of contexts. As this check is costly, it is only done
+	in the long form of the bytecodes, which are not used often. In this hierarchy we force the compiler to alwasy generate
+	long bytecodes"
+	<fixedCompileError>
+	^super compiler options: #(#+ optionLongIvarAccessBytecodes)
+%
+
+set compile_env: 0
+run
+Smalltalk at: #AdditionalMethodState
+%
+set class **
+set compile_env: 2
+
+category: '*Reflectivity'
+method: 
+metaLinkOptions
+	<fixedCompileError>
+	^{
+	#selector -> #( #+ optionCompileOnLinkInstallation).
+	#isMethodProperties -> #( #+ optionCompileOnLinkInstallation).
+	#metaLinkOptions -> #( #+ optionCompileOnLinkInstallation)
+	}
+%
+
+set compile_env: 0
+run
+Smalltalk at: #VirtualMachine
+%
+set class **
+set compile_env: 2
+
+category: '*Reflectivity'
+method: 
+metaLinkOptions
+	<fixedCompileError>
+	^{
+	#isSpur -> #( #+ optionCompileOnLinkInstallation).
+	#metaLinkOptions -> #( #+ optionCompileOnLinkInstallation)
+	}
+%
+
+set compile_env: 0
+run
+Smalltalk at: #Behavior
+%
+set class **
+set compile_env: 2
+
+category: '*Reflectivity'
+method: 
+metaLinkOptions
+	<fixedCompileError>
+	^{
+	#methodDict -> #( #+ optionCompileOnLinkInstallation).
+	#metaLinkOptions -> #( #+ optionCompileOnLinkInstallation)
+	}
+%
+
+set compile_env: 0
+run
+Smalltalk at: #SmalltalkImage
+%
+set class **
+set compile_env: 2
+
+category: '*Reflectivity'
+method: 
+metaLinkOptions
+	<fixedCompileError>
+	^{
+	#vm -> #( #+ optionCompileOnLinkInstallation).
+	#metaLinkOptions -> #( #+ optionCompileOnLinkInstallation)
+	}
+%
+errorCount
+
+set compile_env: 0
+run
+Smalltalk at: #CCompilationContext
+%
+set class **
+set compile_env: 2
+
+category: 'instance creation'
+classMethod: 
+default 
+	<fixedCompileError>
+	| instance |
+	instance := self new.
+	instance parseOptions: OpalCompiler defaultOptions.
+	AbstractCompiler compileWithErrors 
+		ifTrue: [ instance parseOptions: #(#+ optionParseErrors) ].
+	^instance.
+%
+
+
+set compile_env: 0
+run
+Smalltalk at: #CompilationContext
+%
+set class **
+set compile_env: 2
+
+category: 'instance creation'
+classMethod: 
+default 
+	<fixedCompileError>
+	| instance |
+	instance := self new.
+	instance parseOptions: OpalCompiler defaultOptions.
+	AbstractCompiler compileWithErrors 
+		ifTrue: [ instance parseOptions: #(#+ optionParseErrors) ].
+	^instance.
+%
+errorCount
+
+set compile_env: 0
+run
+Smalltalk at: #MetaLink
+%
+set class **
+set compile_env: 2
+
+category: 'options'
+classMethod: 
+defaultOptions
+	<fixedCompileError>
+	^ #(
+	#+ optionInlineMetaObject            "meta object is inlined by default."
+	#+ optionInlineCondition             "condition is inlined by default."
+	#- optionCompileOnLinkInstallation   "generate compiledMethod on link installation"
+	#- optionOneShot                     "remove link after first activation"
+	#- optionMetalevel                   "force level: 0 for the link"
+	#- optionDisabledLink                "links are active by default"
+	)
+%
+
+set compile_env: 0
+run
+Smalltalk at: #ReflectiveMethod
+%
+set class **
+set compile_env: 2
+
+category: 'invalidate'
+method: 
+metaLinkOptions
+	<fixedCompileError>
+	^{
+	#invalidate -> #( #+ optionCompileOnLinkInstallation).
+	#increaseLinkCount -> #( #+ optionCompileOnLinkInstallation).
+	#linkCount: -> #( #+ optionCompileOnLinkInstallation).
+	#methodClass: -> #( #+ optionCompileOnLinkInstallation).
+	#compiledMethod: -> #( #+ optionCompileOnLinkInstallation).
+	#ast -> #( #+ optionCompileOnLinkInstallation).
+	#installCompiledMethod -> #( #+ optionCompileOnLinkInstallation).
+	#installReflectiveMethod -> #( #+ optionCompileOnLinkInstallation).
+	#installMethod:-> #( #+ optionCompileOnLinkInstallation).
+	#installLink: -> #( #+ optionCompileOnLinkInstallation).
+	#reinstallASTInCache -> #( #+ optionCompileOnLinkInstallation).
+	#removeLink: -> #( #+ optionCompileOnLinkInstallation).
+	#selector: -> #( #+ optionCompileOnLinkInstallation).
+	#run:with:in: -> #( #+ optionCompileOnLinkInstallation).
+	#compiledMethod -> #( #+ optionCompileOnLinkInstallation).
+	#reflectiveMethod -> #( #+ optionCompileOnLinkInstallation).
+	#decreaseLinkCount -> #( #+ optionCompileOnLinkInstallation).
+	#metaLinkOptions -> #( #+ optionCompileOnLinkInstallation)
+	}
+%
+
+set compile_env: 0
+run
+Smalltalk at: #HashedCollection
+%
+set class **
+set compile_env: 2
+
+category: '*Reflectivity'
+method: 
+metaLinkOptions
+	<fixedCompileError>
+	^{
+	#findElementOrNil: -> #( #+ optionCompileOnLinkInstallation).
+	#metaLinkOptions -> #( #+ optionCompileOnLinkInstallation)
+	}
+%
+
+set compile_env: 0
+run
+Smalltalk at: #RBMethodNode
+%
+set class **
+set compile_env: 2
+
+category: '*Reflectivity'
+method: 
+metaLinkOptions
+	<fixedCompileError>
+	^{
+	#metaLinkOptionsFromClassAndMethod -> #( #+ optionCompileOnLinkInstallation).
+	#metaLinkOptions -> #( #+ optionCompileOnLinkInstallation)
+	}
+%
+
+set compile_env: 0
+run
+Smalltalk at: #OpalCompiler
+%
+set class **
+set compile_env: 2
+
+category: 'options'
+classMethod: 
+defaultOptions
+	<fixedCompileError>
+	^ #(
+	"by default we inline all optimized constructs"
+	#+ optionInlineIf
+	#+ optionInlineIfNil
+	#+ optionInlineAndOr
+	#+ optionInlineWhile
+	#+ optionInlineToDo
+	#+ optionInlineCase
+	#- optionInlineTimesRepeat
+	#- optionInlineRepeat
+	
+	#- optionInlineNone "to turn off all. Overrides the others" 	
+	#- optionLongIvarAccessBytecodes "special for Contexts"
+	#+ optionOptimizeIR 
+	
+	#- optionParseErrors "parse syntactically wrong code"
+	)
+%
+
+set compile_env: 0
+run
+Smalltalk at: #Set
+%
+set class **
+set compile_env: 2
+
+category: '*Reflectivity'
+method: 
+metaLinkOptions
+	<fixedCompileError>
+	^{
+	#parseOptions: -> #( #+ optionCompileOnLinkInstallation).
+	#metaLinkOptions -> #( #+ optionCompileOnLinkInstallation)
+	}
+%
+
+set compile_env: 0
+run
+Smalltalk at: #MethodDictionary
+%
+set class **
+set compile_env: 2
+
+category: '*Reflectivity'
+method: 
+metaLinkOptions
+	<fixedCompileError>
+	^{
+	#scanFor: -> #( #+ optionCompileOnLinkInstallation).
+	#at:put: -> #( #+ optionCompileOnLinkInstallation).
+	#metaLinkOptions -> #( #+ optionCompileOnLinkInstallation)
+	}
+%
+
+set compile_env: 0
+run
+Smalltalk at: #CompiledMethod
+%
+set class **
+set compile_env: 2
+
+category: '*Reflectivity'
+method: 
+metaLinkOptions
+	<fixedCompileError>
+	^{
+	#penultimateLiteral -> #( #+ optionCompileOnLinkInstallation).
+	#selector -> #( #+ optionCompileOnLinkInstallation).
+	#objectAt: -> #( #+ optionCompileOnLinkInstallation).
+	#header -> #( #+ optionCompileOnLinkInstallation).
+	#numLiterals -> #( #+ optionCompileOnLinkInstallation).
+	#literalAt: -> #( #+ optionCompileOnLinkInstallation).
+	#metaLinkOptions -> #( #+ optionCompileOnLinkInstallation)
+	}
+%
+
+set compile_env: 0
+run
+Smalltalk at: #ProtoObject
+%
+set class **
+set compile_env: 2
+
+category: '*Reflectivity'
+method: 
+metaLinkOptions
+	<fixedCompileError>
+	^{
+	#isNil -> #( #+ optionCompileOnLinkInstallation).
+	#metaLinkOptions -> #( #+ optionCompileOnLinkInstallation)
+	}
+%
 
 
 errorCount

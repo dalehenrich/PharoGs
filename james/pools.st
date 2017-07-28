@@ -1,4 +1,3 @@
-
 | fileStream set |
 fileStream := (FileStream forceNewFileNamed: 'pools.gs')
 	text; yourself.
@@ -32,4 +31,5 @@ fileStream
 	nextPutAll: 'errorCount'; lf;
 	close.
 
+Transcript show: 'pools count = ' , set size printString; cr.
 SmalltalkImage current snapshot: false andQuit: true.

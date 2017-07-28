@@ -1,6 +1,3 @@
-"
-../MacOS/Pharo --headless Pharo-minimal.image classes.st
-"
 [
 | count fileStream list |
 fileStream := (FileStream forceNewFileNamed: 'classes.gs') text;

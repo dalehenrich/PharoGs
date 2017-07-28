@@ -1,6 +1,4 @@
-"
-/Applications/Pharo6.0.app/Contents/MacOS/Pharo --headless Pharo-minimal.image methods.st
-"
+Transcript show: 'method count = '.
 [
 | cr lf tab block stream1 reservedSelectors list count compileErrors |
 cr := Character cr.
@@ -19,39 +17,56 @@ reservedSelectors := #(
 ).
 compileErrors := 
 #(
-	#(#MCPatch #initializeWithBase:target:)
-	#(#UIManager #spawnNewProcess)
-	#(#MCVersion #withAllDependenciesDo:)
-	#(#RBProgramNode #comments:)
-	#(#Protocol #initialize)
-	#('Job class' #exampleCurrentValue)
-	#(#ZnImageExampleDelegate #html)
-	#(#PharoChangesCondenser #reset)
-	#(#SourceFileArray #readOnlyCopy)
-	#(#TemporaryVariable #hash)
-	#('TextFontChange class' #defaultFontChange)
-	#('Context class' #runSimulated:)
-	#(#IRBytecodeDecompiler #jump:)
-	#(#TraitDescription fileOutLocalMethodsInCategory:on:)
-	#(#UTF16TextConverter #nextFromStream:)
-	#(#ZdcPluginSSLSession #serverName:)
-	#(#IRReconstructor #createTempVectorNamed:withVars:)
+	#(#AdditionalMethodState #metaLinkOptions)
+	#(#Behavior #metaLinkOptions)
+	#('CCompilationContext class' #default)
+	#(#ChunkReadStream #parseLangTagFor:)
+	#(#Class #category)
+	#('CompilationContext class' #default)
+	#(#CompiledMethod #metaLinkOptions)
 	#(#ConfigurationCommandLineHandler #printConfigurations:)
+	#('Context class' #runSimulated:)
+	#(#Form #fillAlpha:)
+	#(#HashedCollection #metaLinkOptions)
+	#('InstructionStream class' #compiler)
+	#(#IRBytecodeDecompiler #jump:)
 	#(#IRPrinterV2 #visitPopIntoRemoteTemp:)
 	#(#IRPrinterV2 #visitPushRemoteTemp:)
 	#(#IRPrinterV2 #visitStoreRemoteTemp:)
-	#(#StdioStream #next:)
-	#(#ChunkReadStream #parseLangTagFor:)
-	#(#Form #fillAlpha:)
-	#(#MCMczReader #loadDefinitions)
-	#(#Trait #category)
-	#(#Class #category)
-	#('Text class' #fromString:)
-	#('Text class' #initialize)
-	#(#String #withNoLineLongerThan:)
+	#(#IRReconstructor #createTempVectorNamed:withVars:)
+	#('Job class' #exampleCurrentValue)
 	#(#MCMcdReader #loadPatch)
+	#(#MCMczReader #loadDefinitions)
+	#(#MCPatch #initializeWithBase:target:)
+	#(#MCVersion #withAllDependenciesDo:)
+	#('MetaLink class' #defaultOptions)
+	#(#MethodDictionary #metaLinkOptions)
 	#(#MultiByteFileStream #nextChunk)
 	#(#MultiByteFileStream #nextPreamble)
+	#(#Object #mustBeBooleanInMagic:)
+	#('OpalCompiler class' #defaultOptions)
+	#(#PharoChangesCondenser #reset)
+	#(#Protocol #initialize)
+	#(#ProtoObject #metaLinkOptions)
+	#(#RBMethodNode #metaLinkOptions)
+	#(#RBProgramNode #comments:)
+	#(#ReflectiveMethod #metaLinkOptions)
+	#(#Set #metaLinkOptions)
+	#(#SmalltalkImage #metaLinkOptions)
+	#(#SourceFileArray #readOnlyCopy)
+	#(#StdioStream #next:)
+	#(#String #withNoLineLongerThan:)
+	#(#TemporaryVariable #hash)
+	#('Text class' #fromString:)
+	#('Text class' #initialize)
+	#('TextFontChange class' #defaultFontChange)
+	#(#Trait #category)
+	#(#TraitDescription fileOutLocalMethodsInCategory:on:)
+	#(#UIManager #spawnNewProcess)
+	#(#UTF16TextConverter #nextFromStream:)
+	#(#VirtualMachine #metaLinkOptions)
+	#(#ZdcPluginSSLSession #serverName:)
+	#(#ZnImageExampleDelegate #html)
 ).
 stream1 := (FileStream forceNewFileNamed: 'methods.gs') text
 	nextPutAll: 'errorCount'; lf;
@@ -158,7 +173,7 @@ stream1
 	nextPutAll: 'output pop'; lf;
 	nextPutAll: 'errorCount'; lf;
 	close.
-Transcript show: 'method count = ' , count printString; cr.
+Transcript show: count printString; cr.
 ] on: Error do: [:ex | 
 	Transcript show: ex description; cr.
 ].
