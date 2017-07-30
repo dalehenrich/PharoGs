@@ -10,7 +10,7 @@ set compile_env: 2
 category: 'decorated'
 method: 
 parseLangTagFor: aString
-	<fixedCompileError>
+	<PharoGs>
 
 	| string peek runsRaw foundTag |
 	string := aString.
@@ -38,7 +38,7 @@ set compile_env: 2
 category: 'organization'
 method: 
 category
-	<fixedCompileError>
+	<PharoGs>
 
 	"Answer the system organization category for the receiver. First check whether the
 	category name stored in the ivar is still correct and only if this fails look it up
@@ -65,7 +65,7 @@ set compile_env: 2
 category: 'printing'
 method: 
 printConfigurations: configurations
-	<fixedCompileError>
+	<PharoGs>
 
 	self inform: (String streamContents:  [ :s|
 		s
@@ -89,7 +89,7 @@ set compile_env: 2
 category: 'simulation'
 classMethod: 
 runSimulated: aBlock
-	<fixedCompileError>
+	<PharoGs>
 
 	"Simulate the execution of the argument, current. Answer the result it 
 	returns."
@@ -109,7 +109,7 @@ set compile_env: 2
 category: 'other'
 method: 
 fillAlpha: alphaValue
-	<fixedCompileError>
+	<PharoGs>
 
 	"Fill a 32bit form with a constant alpha value"
 	| bb |
@@ -130,7 +130,7 @@ set compile_env: 2
 category: 'instruction decoding'
 method: 
 jump: dist
-	<fixedCompileError>
+	<PharoGs>
 
 	| index seq instr newSeq seqs |
 	index := instructionStream pc + dist .
@@ -168,7 +168,7 @@ set compile_env: 2
 category: 'visiting'
 method: 
 visitPopIntoRemoteTemp: remoteTemp
-	<fixedCompileError>
+	<PharoGs>
 
 	stream nextPutAll: 'popIntoRemoteTemp: '.
 	remoteTemp name printOn: stream.
@@ -186,7 +186,7 @@ set compile_env: 2
 category: 'visiting'
 method: 
 visitPushRemoteTemp: remoteTemp
-	<fixedCompileError>
+	<PharoGs>
 
 	stream nextPutAll: 'pushRemoteTemp: '.
 	remoteTemp name printOn: stream.
@@ -204,7 +204,7 @@ set compile_env: 2
 category: 'visiting'
 method: 
 visitStoreRemoteTemp: remoteTemp
-	<fixedCompileError>
+	<PharoGs>
 
 	stream nextPutAll: 'storeRemoteTemp: '.
 	remoteTemp name printOn: stream.
@@ -222,7 +222,7 @@ set compile_env: 2
 category: 'initialize'
 method: 
 createTempVectorNamed: name withVars: anArray
-	<fixedCompileError>
+	<PharoGs>
 
 	" Don't add the temp yet, we only know it's index at the end of the block or method "
 	"self addVectorTemps: anArray"
@@ -241,7 +241,7 @@ set compile_env: 2
 category: 'examples'
 classMethod: 
 exampleCurrentValue
-	<fixedCompileError>
+	<PharoGs>
 
 	[ :job| 
 		job title: 'Simulating some progress for 1 Second'. 
@@ -263,7 +263,7 @@ set compile_env: 2
 category: 'loading'
 method: 
 loadPatch
-	<fixedCompileError>
+	<PharoGs>
 
 	| old new |
 	(self zip memberNamed: 'patch.bin') ifNotNil:
@@ -290,7 +290,7 @@ set compile_env: 2
 category: 'loading'
 method: 
 loadDefinitions
-	<fixedCompileError>
+	<PharoGs>
 
 	definitions := OrderedCollection new.
 	(self zip memberNamed: 'snapshot.bin') ifNotNil:
@@ -311,7 +311,7 @@ set compile_env: 2
 category: 'initializing'
 method: 
 initializeWithBase: baseSnapshot target: targetSnapshot
-	<fixedCompileError>
+	<PharoGs>
 
 	| base target |	
 	operations := OrderedCollection new.
@@ -343,7 +343,7 @@ set compile_env: 2
 category: 'enumerating'
 method: 
 withAllDependenciesDo: aBlock
-	<fixedCompileError>
+	<PharoGs>
 
 	self allDependenciesDo: aBlock ifUnresolved: [:ignored |].
 	aBlock value: self
@@ -359,7 +359,7 @@ set compile_env: 2
 category: 'fileIn/Out'
 method: 
 nextChunk
-	<fixedCompileError>
+	<PharoGs>
 
 	"Answer the contents of the receiver, up to the next terminator
 	character. Doubled terminators indicate an embedded terminator
@@ -390,7 +390,7 @@ set compile_env: 2
 category: 'fileIn/Out'
 method: 
 nextPreamble
-	<fixedCompileError>
+	<PharoGs>
 
 	"Assuming that preamble part does not contain ]lang[ tag"
 	self skipSeparators.
@@ -418,7 +418,7 @@ set compile_env: 2
 category: 'initialization'
 method: 
 reset
-	<fixedCompileError>
+	<PharoGs>
 
 	remoteStringMap := IdentityDictionary new.
 	newChangesFile := self temporaryFile.
@@ -439,7 +439,7 @@ set compile_env: 2
 category: 'initialization'
 method: 
 initialize
-	<fixedCompileError>
+	<PharoGs>
 
 	super initialize.
 	methods := IdentitySet new.
@@ -456,7 +456,7 @@ set compile_env: 2
 category: 'accessing'
 method: 
 comments: aCollection
-	<fixedCompileError>
+	<PharoGs>
 
 	(aCollection ifNil: [#()])
 		ifEmpty: [ self removeProperty: #comments ifAbsent: [] ] 
@@ -473,7 +473,7 @@ set compile_env: 2
 category: 'private - copying'
 method: 
 readOnlyCopy
-	<fixedCompileError>
+	<PharoGs>
 
 	"Answer a read only copy of self. The caller is responsible of closing it."
 	^ self species new
@@ -492,7 +492,7 @@ set compile_env: 2
 category: 'accessing'
 method: 
 next: n
-	<fixedCompileError>
+	<PharoGs>
 
 	"Return a string with the next n characters of the filestream in it."
 	| readBuffer read startingAt |
@@ -518,7 +518,7 @@ set compile_env: 2
 category: 'converting'
 method: 
 withNoLineLongerThan: aNumber
-	<fixedCompileError>
+	<PharoGs>
 
 	"Answer a string with the same content as receiver, but rewrapped so that no line has more characters than the given number"
 	(aNumber isNumber not or: [ aNumber < 1 ]) ifTrue: [self error: 'too narrow'].
@@ -556,7 +556,7 @@ set compile_env: 2
 category: 'comparing'
 method: 
 hash
-	<fixedCompileError>
+	<PharoGs>
 
 	^ (name hash
 		bitXor: method hash)
@@ -573,7 +573,7 @@ set compile_env: 2
 category: 'instance creation'
 classMethod: 
 fromString: aString 
-	<fixedCompileError>
+	<PharoGs>
 
   "Answer an instance of me whose characters are those of the argument, aString."
   | defaultFontStyle fontNumber |
@@ -594,7 +594,7 @@ set compile_env: 2
 category: 'initialization'
 classMethod: 
 initialize	"Text initialize"
-	<fixedCompileError>
+	<PharoGs>
 
 	"Initialize constants shared by classes associated with text display."
 	TextSharedInformation at: #CaretForm put:
@@ -619,7 +619,7 @@ set compile_env: 2
 category: 'as yet unclassified'
 classMethod: 
 defaultFontChange
-	<fixedCompileError>
+	<PharoGs>
 
   "Answer a TextFontChange that represents the default font"
   | defaultFontStyle fontIndex |
@@ -638,7 +638,7 @@ set compile_env: 2
 category: 'organization'
 method: 
 category
-	<fixedCompileError>
+	<PharoGs>
 
 	"Answer the system organization category for the receiver. First check whether the
 	category name stored in the ivar is still correct and only if this fails look it up
@@ -665,7 +665,7 @@ set compile_env: 2
 category: '*CodeExport'
 method: 
 fileOutLocalMethodsInCategory: aSymbol on: aFileStream
-	<fixedCompileError>
+	<PharoGs>
 
 	"File out only the local (non-trait) methods for this category."
 	| selectors localSelectorsA |
@@ -688,7 +688,7 @@ set compile_env: 2
 category: 'ui process'
 method: 
 spawnNewProcess
-	<fixedCompileError>
+	<PharoGs>
 
 	"do nothing by default"
 %
@@ -703,7 +703,7 @@ set compile_env: 2
 category: 'conversion'
 method: 
 nextFromStream: aStream
-	<fixedCompileError>
+	<PharoGs>
 
 	| character1 character2 readBOM charValue |
 	aStream isBinary ifTrue: [^ aStream basicNext].
@@ -736,7 +736,7 @@ set compile_env: 2
 category: 'accessing'
 method: 
 serverName: serverName
-	<fixedCompileError>
+	<PharoGs>
 
 	"Set the Server Name Indication (SNI) to serverName, 
 	the fully qualified domain name of the host to connect to.
@@ -755,7 +755,7 @@ set compile_env: 2
 category: 'accessing'
 method: 
 html
-	<fixedCompileError>
+	<PharoGs>
 
 	^ ZnHtmlOutputStream streamContents: [ :html |
 		 html page: 'Image' do: [
@@ -779,9 +779,9 @@ set compile_env: 2
 category: '*OpalCompiler-Core'
 method: 
 mustBeBooleanInMagic: context
+	<PharoGs>
 	"Permits to redefine methods inlined by compiler.
 	Take the ast node corresponding to the mustBeBoolean error, compile it on the with Opal fly and executes it as a DoIt. Then resume the execution of the context."
-	<fixedCompileError>
 	| sendNode methodNode method |
 	"get the message send node that triggered mustBeBoolean"
 	sendNode := context sourceNode sourceNodeForPC: context pc - 1.
@@ -820,10 +820,10 @@ set compile_env: 2
 category: '*OpalCompiler-Core'
 classMethod: 
 compiler
+	<PharoGs>
 	"The JIT compiler needs to trap all reads to instance variables of contexts. As this check is costly, it is only done
 	in the long form of the bytecodes, which are not used often. In this hierarchy we force the compiler to alwasy generate
 	long bytecodes"
-	<fixedCompileError>
 	^super compiler options: #(#+ optionLongIvarAccessBytecodes)
 %
 
@@ -837,7 +837,7 @@ set compile_env: 2
 category: '*Reflectivity'
 method: 
 metaLinkOptions
-	<fixedCompileError>
+	<PharoGs>
 	^{
 	#selector -> #( #+ optionCompileOnLinkInstallation).
 	#isMethodProperties -> #( #+ optionCompileOnLinkInstallation).
@@ -855,7 +855,7 @@ set compile_env: 2
 category: '*Reflectivity'
 method: 
 metaLinkOptions
-	<fixedCompileError>
+	<PharoGs>
 	^{
 	#isSpur -> #( #+ optionCompileOnLinkInstallation).
 	#metaLinkOptions -> #( #+ optionCompileOnLinkInstallation)
@@ -872,7 +872,7 @@ set compile_env: 2
 category: '*Reflectivity'
 method: 
 metaLinkOptions
-	<fixedCompileError>
+	<PharoGs>
 	^{
 	#methodDict -> #( #+ optionCompileOnLinkInstallation).
 	#metaLinkOptions -> #( #+ optionCompileOnLinkInstallation)
@@ -889,7 +889,7 @@ set compile_env: 2
 category: '*Reflectivity'
 method: 
 metaLinkOptions
-	<fixedCompileError>
+	<PharoGs>
 	^{
 	#vm -> #( #+ optionCompileOnLinkInstallation).
 	#metaLinkOptions -> #( #+ optionCompileOnLinkInstallation)
@@ -907,7 +907,7 @@ set compile_env: 2
 category: 'instance creation'
 classMethod: 
 default 
-	<fixedCompileError>
+	<PharoGs>
 	| instance |
 	instance := self new.
 	instance parseOptions: OpalCompiler defaultOptions.
@@ -927,7 +927,7 @@ set compile_env: 2
 category: 'instance creation'
 classMethod: 
 default 
-	<fixedCompileError>
+	<PharoGs>
 	| instance |
 	instance := self new.
 	instance parseOptions: OpalCompiler defaultOptions.
@@ -947,7 +947,7 @@ set compile_env: 2
 category: 'options'
 classMethod: 
 defaultOptions
-	<fixedCompileError>
+	<PharoGs>
 	^ #(
 	#+ optionInlineMetaObject            "meta object is inlined by default."
 	#+ optionInlineCondition             "condition is inlined by default."
@@ -968,7 +968,7 @@ set compile_env: 2
 category: 'invalidate'
 method: 
 metaLinkOptions
-	<fixedCompileError>
+	<PharoGs>
 	^{
 	#invalidate -> #( #+ optionCompileOnLinkInstallation).
 	#increaseLinkCount -> #( #+ optionCompileOnLinkInstallation).
@@ -1001,7 +1001,7 @@ set compile_env: 2
 category: '*Reflectivity'
 method: 
 metaLinkOptions
-	<fixedCompileError>
+	<PharoGs>
 	^{
 	#findElementOrNil: -> #( #+ optionCompileOnLinkInstallation).
 	#metaLinkOptions -> #( #+ optionCompileOnLinkInstallation)
@@ -1018,7 +1018,7 @@ set compile_env: 2
 category: '*Reflectivity'
 method: 
 metaLinkOptions
-	<fixedCompileError>
+	<PharoGs>
 	^{
 	#metaLinkOptionsFromClassAndMethod -> #( #+ optionCompileOnLinkInstallation).
 	#metaLinkOptions -> #( #+ optionCompileOnLinkInstallation)
@@ -1035,7 +1035,7 @@ set compile_env: 2
 category: 'options'
 classMethod: 
 defaultOptions
-	<fixedCompileError>
+	<PharoGs>
 	^ #(
 	"by default we inline all optimized constructs"
 	#+ optionInlineIf
@@ -1065,7 +1065,7 @@ set compile_env: 2
 category: '*Reflectivity'
 method: 
 metaLinkOptions
-	<fixedCompileError>
+	<PharoGs>
 	^{
 	#parseOptions: -> #( #+ optionCompileOnLinkInstallation).
 	#metaLinkOptions -> #( #+ optionCompileOnLinkInstallation)
@@ -1082,7 +1082,7 @@ set compile_env: 2
 category: '*Reflectivity'
 method: 
 metaLinkOptions
-	<fixedCompileError>
+	<PharoGs>
 	^{
 	#scanFor: -> #( #+ optionCompileOnLinkInstallation).
 	#at:put: -> #( #+ optionCompileOnLinkInstallation).
@@ -1100,7 +1100,7 @@ set compile_env: 2
 category: '*Reflectivity'
 method: 
 metaLinkOptions
-	<fixedCompileError>
+	<PharoGs>
 	^{
 	#penultimateLiteral -> #( #+ optionCompileOnLinkInstallation).
 	#selector -> #( #+ optionCompileOnLinkInstallation).
@@ -1122,7 +1122,7 @@ set compile_env: 2
 category: '*Reflectivity'
 method: 
 metaLinkOptions
-	<fixedCompileError>
+	<PharoGs>
 	^{
 	#isNil -> #( #+ optionCompileOnLinkInstallation).
 	#metaLinkOptions -> #( #+ optionCompileOnLinkInstallation)
