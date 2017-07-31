@@ -1,6 +1,6 @@
 Transcript show: 'method count = '.
 [
-| cr lf tab block stream1 reservedSelectors list count compileErrors |
+| cr lf tab block stream1 reservedSelectors list count compileErrors keepGs |
 cr := Character cr.
 lf := Character lf.
 tab := Character tab.
@@ -68,6 +68,14 @@ compileErrors :=
 	#(#ZdcPluginSSLSession #serverName:)
 	#(#ZnImageExampleDelegate #html)
 ).
+keepGs := #(	"classes known to the VM that need to use the GemStone one"
+	Array ArithmeticError Behavior BlockClosure Boolean ByteArray CannotReturn 
+	Character Class ClassDescription Collection Error Exception ExceptionSet 
+	Float FloatingPointException Halt Integer LargeInteger Magnitude Message 
+	MessageNotUnderstood Metaclass Notification Number Object Pragma 
+	ProcessorScheduler ScaledDecimal SequenceableCollection SmallInteger String 
+	Symbol UndefinedObject Warning ZeroDivide
+).
 stream1 := (FileStream forceNewFileNamed: 'methods.gs') text
 	nextPutAll: 'errorCount'; lf;
 	nextPutAll: 'output push methods.out only'; lf;
@@ -96,20 +104,28 @@ list do: [ :eachClass |
 			nextPutAll: 'Smalltalk at: #'; nextPutAll: eachClass name; lf;
 			nextPut: $%; lf;
 			nextPutAll: 'set class **'; lf;
-			nextPutAll: 'set compile_env: 2'; lf;
-			nextPutAll: 'removeAllMethods'; lf;
-			nextPutAll: 'removeAllClassMethods'; lf;
-			nextPutAll: 'set compile_env: 0'; lf;
-			nextPutAll: 'removeAllMethods'; lf;
-			nextPutAll: 'removeAllClassMethods'; lf;
-			nextPutAll: 'run'; lf;
-			nextPutAll: '(Smalltalk at: #'; nextPutAll: eachClass name;
-			nextPutAll: ') comment: ';
-			print: (block value: eachClass comment); lf;
-			nextPutAll: '; yourself.'; lf;
-			nextPut: $%; lf;
-			nextPutAll: 'set compile_env: 2'; lf;
 			yourself.
+		(keepGs includes: eachClass name) ifTrue: [
+			stream2
+				nextPutAll: 'set compile_env: 2'; lf;
+				nextPutAll: 'category: ''GemStone'''; lf;
+				nextPutAll: 'classMethod:'; lf;
+				nextPutAll: 'pharoComment'; lf;
+				nextPut: $^; 
+				print: (block value: eachClass comment); lf;
+				nextPut: $%; lf;
+				yourself.
+		] ifFalse: [
+			stream2
+				nextPutAll: 'run'; lf;
+				nextPutAll: '(Smalltalk at: #'; nextPutAll: eachClass name;
+				nextPutAll: ') comment: ';
+				print: (block value: eachClass comment); lf;
+				nextPutAll: '; yourself.'; lf;
+				nextPut: $%; lf;
+				nextPutAll: 'set compile_env: 2'; lf;
+				yourself.
+		].
 		(Array with: eachClass class with: eachClass) do: [ :eachBehavior |
 			| methodDict organization  |
 			methodDict := eachBehavior methodDict.
@@ -154,8 +170,15 @@ list do: [ :eachClass |
 					nextPutAll: 'category: '''; nextPutAll: category; nextPut: $'; lf;
 					nextPutAll: (eachBehavior isMeta ifTrue: ['classMethod: '] ifFalse: ['method: ']); lf.
 				(source substrings: (Array with: lf)) do: [:eachLine | 
+					| line |
+					line := eachLine , ' '.
 					(eachLine notEmpty and: [eachLine first == $%]) ifTrue: [stream2 space].
-					stream2 nextPutAll: eachLine; lf.
+					eachClass == Class ifTrue: [	"can't use instVarNames as method argument"
+						line := line copyReplaceAll: 'self instVarNames' with: '(self instVarNames)'.
+						line := line copyReplaceAll: 'self class instVarNames' with: '(self class instVarNames)'.
+						line := line copyReplaceAll: ' instVarNames ' with: ' instVarNameList '.
+					].
+					stream2 nextPutAll: line; lf.
 				].
 				stream2 nextPut: $%; lf.
 				count := count + 1.
