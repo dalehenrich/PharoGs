@@ -32,7 +32,7 @@ keepGs
 	add: #Metaclass; 
 	add: #ScaledDecimal; 
 	yourself.
-fileStream
+fileStream cr;
 	tab; nextPutAll: 'at: #ArithmeticError	put: (Globals at: #NumericError);'; lf;
 	tab; nextPutAll: 'at: #ClassDescription	put: (Globals at: #Module);'; lf;
 	tab; nextPutAll: 'at: #Metaclass 		put: (Globals at: #Metaclass3);'; lf;

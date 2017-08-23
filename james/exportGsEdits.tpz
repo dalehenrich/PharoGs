@@ -1,0 +1,60 @@
+run
+| classes environment fileStream symbolList |
+classes := Array new.
+environment := 2.
+symbolList := System myUserProfile symbolList.
+symbolList do: [:eachDict | 
+	eachDict do: [:eachGlobal | 
+		eachGlobal isBehavior ifTrue: [
+			| array |
+			array := Array with: eachGlobal with: eachGlobal class.
+			array do: [:eachBehavior | 
+				(eachBehavior methodDictForEnv: environment) do: [:eachMethod | 
+					| flag |
+					flag := eachMethod pragmas anySatisfy: [:eachPragma | 
+						eachPragma keyword == #'PharoGs'.
+					].
+					flag ifTrue: [
+						fileStream ifNil: [fileStream := (Globals at: #'FileStream') 
+							write: 'methods/' , eachGlobal name , '.gs'
+							mode: #'append'
+							check: false
+							type: #'serverText'.
+						].
+						eachBehavior 
+							fileOutMethod: eachMethod selector
+							environmentId: environment
+							on: fileStream.
+						classes add: eachGlobal.
+					].
+				].
+			].
+			fileStream ifNotNil: [fileStream close. fileStream := nil].
+		].
+	].
+].
+fileStream := (Globals at: #'FileStream') 
+	write: 'importGsEdits.tpz'
+	mode: #'truncate'
+	check: false
+	type: #'serverText'.
+fileStream
+	nextPutAll: 'output push importGsEdits.out only'; lf;
+	nextPutAll: 'errorCount'; lf;
+	yourself.
+classes := classes asIdentitySet asSortedCollection: [:a :b | a name <= b name].
+classes do: [:eachClass | 
+	fileStream
+		nextPutAll: 'input methods/';
+		nextPutAll: eachClass name;
+		nextPutAll: '.gs';
+		lf.
+].
+fileStream
+	nextPutAll: 'errorCount'; lf;
+	nextPutAll: 'output pop'; lf;
+	nextPutAll: 'errorCount'; lf;
+	close;
+	yourself.
+classes size	
+%

@@ -1,7 +1,7 @@
-! ifErr 1 stk
-! ifErr 2 stack
-! ifErr 3 abort
-! ifErr 4 exit
+ifErr 1 stk
+ifErr 2 stack
+ifErr 3 abort
+ifErr 4 exit
 run
 | symbolList |
 symbolList := (Globals at: #System) myUserProfile symbolList.
@@ -19,9 +19,8 @@ login
 input globals.gs
 input pools.gs
 input classes.gs
-input classVariables.tpz
 input methods.gs
-input compileErrors.tpz
-! commit
-! logout
-! exit
+input importGsEdits.tpz
+commit
+logout
+exit
