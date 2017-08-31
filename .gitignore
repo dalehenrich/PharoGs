@@ -6,8 +6,8 @@ Session.vim
 *~
 **/.DS_Store
 .topazini
-*.gs
 *.out
 PharoDebug.log
 Pharo-minimal.changes
 Pharo-minimal.image
+james/classes/*
