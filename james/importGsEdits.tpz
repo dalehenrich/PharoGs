@@ -5,6 +5,7 @@ input methods/ArrayedCollection.gs
 input methods/Behavior.gs
 input methods/ByteString.gs
 input methods/CCompilationContext.gs
+input methods/Character.gs
 input methods/ChunkReadStream.gs
 input methods/Class.gs
 input methods/CompilationContext.gs
@@ -47,6 +48,7 @@ input methods/TraitDescription.gs
 input methods/UIManager.gs
 input methods/UTF16TextConverter.gs
 input methods/VirtualMachine.gs
+input methods/WriteStream.gs
 input methods/ZdcPluginSSLSession.gs
 input methods/ZnImageExampleDelegate.gs
 errorCount
