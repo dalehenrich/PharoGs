@@ -143,6 +143,7 @@ list do: [ :eachClass |
 					].
 					(inComment not and: [inString not]) ifTrue: [
 						source := string , '<pharoPrimitive>' , lf asString , 
+							'self error: ''pharoPrimitive''.' , lf asString ,
 							'"' , tab asString , 
 							((source copyFrom: i to: source size) copyReplaceAll: '"' with: '""') , 
 							'"'.

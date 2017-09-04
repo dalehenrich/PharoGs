@@ -1,7 +1,9 @@
 output push importGsEdits.out only
 errorCount
 input methods/AdditionalMethodState.gs
+input methods/ArrayedCollection.gs
 input methods/Behavior.gs
+input methods/ByteString.gs
 input methods/CCompilationContext.gs
 input methods/ChunkReadStream.gs
 input methods/Class.gs
@@ -32,6 +34,7 @@ input methods/RBMethodNode.gs
 input methods/RBProgramNode.gs
 input methods/ReflectiveMethod.gs
 input methods/Set.gs
+input methods/SmallInteger.gs
 input methods/SmalltalkImage.gs
 input methods/SourceFileArray.gs
 input methods/StdioStream.gs

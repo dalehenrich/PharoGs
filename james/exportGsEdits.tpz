@@ -17,7 +17,7 @@ symbolList do: [:eachDict |
 					flag ifTrue: [
 						fileStream ifNil: [fileStream := (Globals at: #'FileStream') 
 							write: 'methods/' , eachGlobal name , '.gs'
-							mode: #'append'
+							mode: #'truncate'
 							check: false
 							type: #'serverText'.
 						].

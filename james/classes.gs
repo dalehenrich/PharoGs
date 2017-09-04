@@ -35,6 +35,7 @@ Smalltalk
 	at: #UndefinedObject put: (Globals at: #UndefinedObject);
 	at: #Warning put: (Globals at: #Warning);
 	at: #ZeroDivide put: (Globals at: #ZeroDivide);
+
 	at: #ArithmeticError	put: (Globals at: #NumericError);
 	at: #ClassDescription	put: (Globals at: #Module);
 	at: #Metaclass 		put: (Globals at: #Metaclass3);
