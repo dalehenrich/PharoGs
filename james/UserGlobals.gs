@@ -77,6 +77,16 @@ test_size
 		assert: #() @env2:size == 0;
 		yourself
 %
+set compile_env: 0
+category: 'other'
+method: ArrayTestCase
+test_printString
+
+	self
+		assert: #(1 2 3) @env0:printString = 'anArray( 1, 2, 3)';
+		assert: #(1 2 3) @env2:printString = '#(1 2 3)';
+		yourself
+%
 
 ! ------------------- Remove existing behavior from CharacterTestCase
 expectvalue /Metaclass3       
