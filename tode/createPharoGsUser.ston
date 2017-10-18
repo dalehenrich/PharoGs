@@ -1,0 +1,38 @@
+TDScriptLeafNode{#name:'createPharoGsUser',#contents:'[ :topez :objIn :tokens :command :commandNode | 
+  | opts args |
+  \"for help: ./createPharoGsUser -h\"
+  command
+    getOptsMixedLongShort: {#(\'help\' $h #\'none\')}
+    optionsAndArguments: [ :options :operands | 
+      opts := options.
+      args := operands ].
+  opts
+    at: \'help\'
+    ifAbsent: [ 
+      | gsHome bootstrapper repositoryUrl |
+      gsHome := System gemEnvironmentVariable: \'GS_HOME\'.
+repositoryUrl := \'cypressfiletree:\' , gsHome , \'/shared/repos/PharoGs/pharo/\'.
+      bootstrapper := PharoGsUserBootstrapLoader new.
+      bootstrapper
+        bootstrapFrom: {\'PharoGs-Basic-ProtoObject\'}
+        repositorySpec:repositoryUrl
+          ;     bootstrapFrom:
+      {\'PharoGs-Dev-ProtoObject\'.
+      \'PharoGs-Tode-ProtoObject\'}
+    repositorySpec:  repositoryUrl
+    compilationSymbolList: System myUserProfile symbolList
+    lookupSymbolList: bootstrapper symbolList
+    envId: bootstrapper sessionMethodEnvironment; yourself]
+    ifPresent: [ :ignored | 
+      TDManPage
+        viewManPage:
+          \'NAME
+  createPharoGsUser - createPharoGsUser script utility template
+SYNOPSIS
+  createPharoGsUser [-h|--help]
+DESCRIPTION
+EXAMPLES
+  ./createPharoGsUser --help
+  ./createPharoGsUser -h
+\'
+        topez: topez ] ]',#creationTime:DateAndTime['2017-10-18T15:39:36.9788920879364-07:00'],#modificationTime:DateAndTime['2017-10-18T15:44:52.36261701583862-07:00']}
