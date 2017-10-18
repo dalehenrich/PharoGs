@@ -1,3 +1,5 @@
 private
 repositoryUrl
-  ^ 'cypressfiletree:/export/foos1/users/dhenrich/dev/_home/shared/repos/PharoGs/pharo/'
+  | gsHome |
+  gsHome := System gemEnvironmentVariable: 'GS_HOME'.
+  ^ 'cypressfiletree:' , gsHome , '/shared/repos/PharoGs/pharo/'
