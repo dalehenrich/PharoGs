@@ -49,11 +49,13 @@ Here's a screen shot of a topaz session logged in as `PharoGsUser`:
 
 ## Installation
 
- ** work in progress **
-
-Exexute the following bash script to install PharoGs into a stone:
+Use the following bash script to install PharoGs into a stone:
 
 ```sh
+cd $GS_HOME/shared/repos/dev
+git checkout dev
+git pull origin dev
+cd $GS_HOME
 createStone -u http://gsdevkit.github.io/GsDevKit_home/PharoGs.ston -i PharoGs -l PharoGs PharoGs 3.4.0
 cp $GS_HOME/shared/repos/PharoGs/bin/installPharoGs $GS_HOME/server/stones/PharoGs
 cd $GS_HOME/server/stones/PharoGs
