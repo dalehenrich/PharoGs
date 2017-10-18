@@ -68,4 +68,3 @@ cd $GS_HOME/server/stones/PharoGs
 [4]: pharo/PharoGs-Basic-ProtoObject.package/ProtoObject.class/instance/doesNotUnderstand..st
 [5]: pharo/PharoGs-Dev-ProtoObject.package/ProtoObject.extension/instance/doesNotUnderstand..st
 
-
