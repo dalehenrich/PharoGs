@@ -62,9 +62,10 @@ cd $GS_HOME/server/stones/PharoGs
 ./installPharoGs
 ```
 
-Rebuild tODE client so that it will use the latest tODE release:
+Rebuild clients so that they will use the dev branch of tODE:
 
 ```sh
+updateGsDevKit -c
 ```
 
 Bring up a tODE client:
@@ -73,27 +74,25 @@ Bring up a tODE client:
 startClient tode
 ```
 
-and execute the following tODE script to bring up a test browser to validate your installataion and as a side effect create a `PharoGsUser`:
+...create the GemStone user `PharoGsUser` with ProtoObject class installed. Every time the script is executed the old user is destroyed and a new, freshly bootstrapped user is created :
 
 ```
-project browse --tests PharoGs
+createPharoGsUser
 ```
 
-Then run the tests:
-
-<img style="border: 2px solid #000000;" src="https://raw.githubusercontent.com/dalehenrich/PharoGs/gs/docs/images/pharGStests.png" />
-
-Then, create a session description for the `PharoGsUser` by exectuing the following tODE script:
+...create a session description for the `PharoGsUser` by executing the following tODE script:
 
 ```
 /home/pharoGs/createUserSessionDescription --user=PharoGsUser
 ```
 
-Then, logout of the PharoGs session and log into the PharoGsUser session and run the tODE command:
+...logout of the PharoGs session and log into the PharoGsUser session and run the tODE command:
 
 ```
 browse class --full ProtoObject
 ```
+
+to browse the PharoGs **ProtoObject** class.
 
 [1]: pharo/PharoGs-Basic-ProtoObject.package/ProtoObject.class
 [2]: pharo/PharoGs-Dev-ProtoObject.package/ProtoObject.extension
