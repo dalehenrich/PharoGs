@@ -1,0 +1,49 @@
+TDScriptLeafNode{#name:'createUserSessionDescription',#contents:'[ :topez :objIn :tokens :command :commandNode | 
+  | opts args |
+  \"for help: ./createUserSessionDescription -h\"
+  command
+    getOptsMixedLongShort:
+      {#(\'help\' $h #\'none\').
+      #(\'user\' nil #\'required\')}
+    optionsAndArguments: [ :options :operands | 
+      opts := options.
+      args := operands ].
+  opts
+    at: \'help\'
+    ifAbsent: [ 
+      | username sessionDescription |
+      username := \'PharoGsUser\'.
+      opts at: \'user\' ifPresent: [ :arg | username := arg ].
+      sessionDescription := topez sessionDescription.
+      sessionDescription
+        name: username;
+        userId: username;
+        environmentId: 2;
+        todeUserId: \'DataCurator\';
+        yourself.
+      (ServerFileDirectory on: \'$GS_HOME/sys/local/sessions\')
+        forceNewFileNamed: \'PharoGsUser\'
+        do: [ :fileStream | 
+          | serializer string |
+          serializer := TodeObjectSerializer preferredSerializer.
+          string := String
+            streamContents: [ :stream | 
+              serializer prettyWriter
+                newLine: String lf;
+                on: stream;
+                nextPut: sessionDescription ].
+          fileStream nextPutAll: string ].
+      sessionDescription ]
+    ifPresent: [ :ignored | 
+      TDManPage
+        viewManPage:
+          \'NAME
+  createUserSessionDescription - createUserSessionDescription script utility template
+SYNOPSIS
+  createUserSessionDescription [-h|--help]
+DESCRIPTION
+EXAMPLES
+  ./createUserSessionDescription --help
+  ./createUserSessionDescription -h
+\'
+        topez: topez ] ]',#creationTime:DateAndTime['2017-10-18T14:36:52.18749308586121-07:00'],#modificationTime:DateAndTime['2017-10-18T15:15:47.11821699142456-07:00']}
