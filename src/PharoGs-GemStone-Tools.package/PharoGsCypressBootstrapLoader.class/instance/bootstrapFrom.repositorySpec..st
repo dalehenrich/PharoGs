@@ -2,7 +2,9 @@ package bootstrap
 bootstrapFrom: packageName repositorySpec: repositorySpec
   | packageManager repo |
   packageManager := PharoGsCypressPackageManager3 new.
-  repo := CypressAbstractRepository onUrl: repositorySpec asUrl alias: ''.
+  repo := CypressAbstractRepository
+    onUrl: (CypressUrl absoluteFromText: repositorySpec)
+    alias: ''.
   packageManager
     defaultSymbolDictionaryName: self smalltalk name;
     defaultSymbolList: self symbolList;
