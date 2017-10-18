@@ -47,6 +47,19 @@ Here's a screen shot of a topaz session logged in as `PharoGsUser`:
 
 <img style="border: 2px solid #000000;" src="https://raw.githubusercontent.com/dalehenrich/PharoGs/gs/docs/images/tode_debugger_2016-12-24.png" />
 
+## Installation
+
+ ** work in progress **
+
+Exexute the following bash script to install PharoGs into a stone:
+
+```sh
+createStone -u http://gsdevkit.github.io/GsDevKit_home/PharoGs.ston -i PharoGs -l PharoGs PharoGs 3.4.0
+cp $GS_HOME/shared/repos/PharoGs/bin/installPharoGs $GS_HOME/server/stones/PharoGS
+cd $GS_HOME/server/stones/PharoGS
+./installPharoGs
+```
+
 [1]: pharo/PharoGs-Basic-ProtoObject.package/ProtoObject.class
 [2]: pharo/PharoGs-Dev-ProtoObject.package/ProtoObject.extension
 [3]: pharo/PharoGs-Tode-ProtoObject.package/ProtoObject.extension
