@@ -43,6 +43,56 @@ classmethod: Smalltalk
     ifTrue: [ aBlock value: glob ]
     ifFalse: [ glob ]
 %
+
+# these two methods used by STON 
+classmethod: SequenceableCollection
+streamContents: blockWithArg
+  ^ self new: 100 streamContents: blockWithArg
+%
+classMethod: SequenceableCollection
+new: newSize streamContents: blockWithArg
+  | stream |
+  stream := WriteStreamPortable on: (self new: newSize).
+  blockWithArg value: stream.
+  ^ stream contents
+%
+method: SequenceableCollection
+beginsWith: aSequenceableCollection
+  (aSequenceableCollection isEmpty
+    or: [ self size < aSequenceableCollection size ])
+    ifTrue: [ ^ false ].
+  aSequenceableCollection
+    withIndexDo: [ :each :index | 
+      (self at: index) ~= each
+        ifTrue: [ ^ false ] ].
+  ^ true
+%
+method: SequenceableCollection
+withIndexDo: elementAndIndexBlock
+  "Just like with:do: except that the iteration index supplies the second argument to the block."
+
+  1 to: self size do: [ :index | elementAndIndexBlock value: (self at: index) value: index ]
+%
+method: Symbol
+value: anObject
+  ^ anObject perform: self
+%
+method: Character
+isCompilerSpecial
+  "Answer whether the receiver is one of the special characters"
+
+  ^ '+-/\*~<>=@,%|&?!' includes: self
+%
+method: Object
+value
+  ^self
+%
+method: Object
+instVarNamed: aString
+  "Return the value of the instance variable in me with that name.  Slow and unclean, but very useful. "
+
+  ^ self instVarAt: (self class allInstVarNames indexOf: aString asSymbol)
+%
 commit
   run
   Metacello new
