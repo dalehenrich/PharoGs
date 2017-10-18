@@ -5,3 +5,9 @@ Session.vim
 .netrwhist
 *~
 **/.DS_Store
+.topazini
+*.out
+PharoDebug.log
+Pharo-minimal.changes
+Pharo-minimal.image
+james/classes/*
