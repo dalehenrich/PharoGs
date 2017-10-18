@@ -1,3 +1,7 @@
 accessing
 allClasses
-  ^ self defaultSymbolList allSatisfying: [ :each | each isBehavior ]
+  | classes |
+  classes := Array new.
+  self defaultSymbolList
+    do: [ :dict | classes addAll: (dict select: [ :each | each isBehavior ]) ].
+  ^ classes
